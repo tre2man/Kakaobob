@@ -15,6 +15,7 @@ Reset='처음으로'
 
 ChoiceUrl=""
 ChoiceDay=0
+ChoiceRes=0
 
 urlStudent="http://www.kumoh.ac.kr/ko/restaurant01.do"
 urlProfess="http://www.kumoh.ac.kr/ko/restaurant02.do"
@@ -48,6 +49,7 @@ def bob():
     user_input=dataRecieve["content"]
     global ChoiceUrl
     global ChoiceDay
+    global ChoiceRes
 
     if user_input == Reset:  # 맨 마지막에서 다시 처음으로 올 때
         response_data = {'message': {"text": "식당을 선택해 주세요"}, "keyboard": {"buttons": Restaurant, "type": "buttons", }}
@@ -55,22 +57,27 @@ def bob():
     elif user_input==Restaurant[0]:   #학생식당 선택할 경우
         response_data={'message':{"text":"날짜를 선택해 주세요"},"keyboard" : {"buttons" : Days,"type" : "buttons",}}
         ChoiceUrl=urlStudent
+        ChoiceRes = 0
 
     elif user_input==Restaurant[1]:   #교직원식당 선택할 경우
         response_data={'message':{"text":"날짜를 선택해 주세요"},"keyboard" : {"buttons" : Days,"type" : "buttons",}}
         ChoiceUrl=urlProfess
+        ChoiceRes = 1
 
     elif user_input==Restaurant[2]:   #푸름1 선택할 경우
         response_data={'message':{"text":"날짜를 선택해 주세요"},"keyboard" : {"buttons" : Days,"type" : "buttons",}}
         ChoiceUrl=urlPorum
+        ChoiceRes = 2
 
     elif user_input==Restaurant[3]:   #오름1 선택할 경우
         response_data={'message':{"text":"날짜를 선택해 주세요"},"keyboard" : {"buttons" : Days,"type" : "buttons",}}
         ChoiceUrl=urlorum1
+        ChoiceRes = 3
 
     elif user_input==Restaurant[4]:   #오름3 선택할 경우
         response_data={'message':{"text":"날짜를 선택해 주세요"},"keyboard" : {"buttons" : Days,"type" : "buttons",}}
         ChoiceUrl=urlorum3
+        ChoiceRes = 4
 
     elif user_input==Days[0]:   #오늘 선택한 경우
         response_data={'message':{"text":"시간을 선택해 주세요"},"keyboard" : {"buttons" : Time,"type" : "buttons",}}
@@ -106,7 +113,7 @@ def bob():
 
     elif user_input==Time[0]:   #조식 선택한 경우
         if ChoiceUrl!=urlorum1 :  #오름 1동 외에 나머지를 선택
-            response_data={'message':{"text": ChoiceUrl+"은 조식이 없습니다. 다시 선택해 주세요."},"keyboard" : {"buttons" : Time,"type" : "buttons",}}
+            response_data={'message':{"text": Restaurant[ChoiceRes]+"은 조식이 없습니다. 다시 선택해 주세요."},"keyboard" : {"buttons" : Time,"type" : "buttons",}}
         else:                     #오름 1동&&조식
             response_data={'message': {"text": returnMenu(ChoiceUrl,ChoiceDay)}, "keyboard": {"buttons": Reset, "type": "buttons", }}
             ChoiceDay=0
