@@ -2,6 +2,7 @@ from flask import Flask,request,jsonify
 import bs4
 import urllib.request
 import os
+import sys
 import time
 
 app = Flask(__name__)
@@ -30,7 +31,7 @@ urlorum3="http://dorm.kumoh.ac.kr/dorm/restaurant_menu03.do"
 @@@ 예외적으로 오름 1동은 중식->석식 @@@
 '''
 
-def returnMenu(url,num):  #식단을 보여줄수 있게 하는 함수
+def returnMenu(url,num):  #식단을 보여줄수 있게 하는 함수 (링크,식단종류)
     html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
     menu = html.findAll("ul", {"class": "s-dot"})
     return menu[num].text
