@@ -38,10 +38,12 @@ def returnMenu(url,num):  #식단을 보여줄수 있게 하는 함수 (링크,�
 
 @app.route('/keyboard')  #최초로 채팅방에 접속시 보여 줄 버튼
 def keyboard():
-    return jsonify({
-        "type" : "buttons",
-        "buttons" : Restaurant
-       })
+    respond_data={"version":"2.0",
+                   "template":{"outputs":[{"simpletext":{"text":"식당을 선택해 주세요."}}]},
+                   "context":{},
+                   "data":{}
+                   }
+    return jsonify(respond_data)
 
 @app.route('/message',methods=["POST"])  #json으로 들어온 사용자 요청을 보고 판단
 def bob():
@@ -52,10 +54,10 @@ def bob():
     global ChoiceRes
 
     response_data={"version":"2.0",
-                   "template":{"outputs":[{"simpletext":{"text":"식당을 선택해 주세요."}}]},
-                   "context":{},
-                   "data":{}
-                   }
+                    "template":{"outputs":[{"simpletext":{"text":"식당을 선택해 주세요."}}]},
+                    "context":{},
+                    "data":{}
+                    }
 
     return jsonify(response_data)
 
