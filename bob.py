@@ -27,7 +27,6 @@ urlorum3="http://dorm.kumoh.ac.kr/dorm/restaurant_menu03.do"
 '''
 월요일~일요일 중식 : 0~6
 월요일~일요일 석식 : 7~13
-
 @@@ 예외적으로 오름 1동은 중식->석식 @@@
 '''
 
@@ -40,17 +39,67 @@ def returnMenu(url,num):  #식단을 보여줄수 있게 하는 함수 (링크,�
 @app.route('/keyboard')  #최초로 채팅방에 접속시 보여 줄 버튼
 def keyboard():
     return jsonify({
-        'type' : 'buttons',
-        'buttons' : Restaurant
-       })
+            "version": "2.0",
+            "template": {"outputs": [{"carousel": {"type" : "basicCard","items": [{"title" : "","description" : "안녕하세"}]}}]}
+            })
 
-@app.route('/message',methods=["POST"])  #json으로 들어온 사용자 요청을 보고 판단
+@app.route('/message', methods=['POST'])  #json으로 들어온 사용자 요청을 보고 판단,테스트로 저녁메뉴만 봅시다
 def bob():
-    dataRecieve = request.get_json()   #사용자가 보낸 메시지 입력
-    user_input=dataRecieve["content"]
+
+    content = request.get_json() #사용자가 보낸 메세지 입력
+    content = content['userRequest']
+    content = content['utterance']
+
     global ChoiceUrl
     global ChoiceDay
     global ChoiceRes
+
+    today=time.localtime().tm_wday+7 #저녁일 경우에는 +7
+
+    if content==u"선택":
+        response_data={
+            "version": "2.0",
+            "template": {"outputs": [{"carousel": {"type" : "basicCard","items": [{"title" : "","description" : returnMenu(urlPorum,today)}]}}]}
+            }
+
+    elif content==u"푸름관":
+        response_data={
+            "version": "2.0",
+            "template": {"outputs": [{"carousel": {"type" : "basicCard","items": [{"title" : "","description" : returnMenu(urlPorum,today)}]}}]}
+            }
+
+    elif content==u"교직원":
+        response_data={
+            "version": "2.0",
+            "template": {"outputs": [{"carousel": {"type" : "basicCard","items": [{"title" : "","description" : returnMenu(urlProfess,today)}]}}]}
+            }
+
+    elif content==u"오름1동":
+        response_data={
+            "version": "2.0",
+            "template": {"outputs": [{"carousel": {"type" : "basicCard","items": [{"title" : "","description" : returnMenu(urlorum1,today)}]}}]}
+            }
+
+    elif content==u"오름3동":
+        response_data={
+            "version": "2.0",
+            "template": {"outputs": [{"carousel": {"type" : "basicCard","items": [{"title" : "","description" : returnMenu(urlorum3,today)}]}}]}
+            }
+
+    elif content==u"학생식당":
+        response_data={
+            "version": "2.0",
+            "template": {"outputs": [{"carousel": {"type" : "basicCard","items": [{"title" : "","description" : returnMenu(urlStudent,today)}]}}]}
+            }
+
+
+    elif content==u"안녕":
+        response_data={
+            "version": "2.0",
+            "template": {"outputs": [{"carousel": {"type" : "basicCard","items": [{"title" : "","description" :"안녕"}]}}]}
+            }
+
+    '''
 
     if user_input == Reset:  # 맨 마지막에서 다시 처음으로 올 때
         response_data = {'message': {"text": "식당을 선택해 주세요"}, "keyboard": {"buttons": Restaurant, "type": "buttons", }}
@@ -128,6 +177,8 @@ def bob():
     elif user_input==Time[2]:   #석식 선택한 경우
         ChoiceDay+=7
         response_data={'message': {"text": returnMenu(ChoiceUrl,ChoiceDay)}, "keyboard": {"buttons": Reset, "type": "buttons", }}
+        
+    '''
 
     return jsonify(response_data)
 
