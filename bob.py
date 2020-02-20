@@ -1,4 +1,3 @@
-
 from flask import Flask,request,jsonify
 import bs4
 import urllib.request
@@ -77,11 +76,6 @@ def returnMenu(url,num):  #식단을 보여줄수 있게 하는 함수 (링크,�
         html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
         menu = html.findAll("ul", {"class": "s-dot"})
         return menu[num].text
-
-
-@app.route('/keyboard')  #최초로 채팅방에 접속시 보여 줄 버튼
-def keyboard():
-    return jsonify({})
 
 @app.route('/message', methods=['POST'])  #json으로 들어온 사용자 요청을 보고 판단
 def bob():
