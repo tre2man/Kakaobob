@@ -58,6 +58,7 @@ jsonChoiceRes = {
                  }
 }
 
+
 jsonChoiceTime = {
     "version": "2.0",
     "template": {"outputs": [{"simpleText": {"text": "시간을 선택해 주세요"}}],
@@ -67,6 +68,7 @@ jsonChoiceTime = {
                                   ]
                  }
 }
+
 
 
 def returnMenu(url,num):  #식단을 보여줄수 있게 하는 함수 (링크,식단종류)
@@ -79,7 +81,20 @@ def returnMenu(url,num):  #식단을 보여줄수 있게 하는 함수 (링크,�
     else:                              #식단이 있을경우
         html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
         menu = html.findAll("ul", {"class": "s-dot"})
-        return menu[num].text
+        return menu[num].text.strip()
+
+
+def returnAvaliableTimeDormitory(url):  #기숙사 식당 이용 시간을 리턴하는 함수
+    html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
+    Time=html.findAll("div",{"class":"contents-area"})
+    return Time[3].text + Time[4].text
+
+
+def returnAvaliableTime(url):  #전체식당 이용 시간을 리턴하는 함수
+    html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
+    Time=html.findAll("ul",{"class":"ul-h-list01"})
+    return Time[1].text
+
 
 @app.route('/message', methods=['POST'])  #json으로 들어온 사용자 요청을 보고 판단
 def bob():
@@ -173,13 +188,28 @@ def bob():
                                      {"label": "저녁", "action": "message", "messageText": "저녁"}, ]}
             }
 
-    elif content==u"점심":
-        response_data={
-        "version": "2.0",
-        "template": {
-            "outputs": [{"simpleText": {"text": returnMenu(ChoiceUrl,ChoiceDay)}}],
-            "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"},]}
-        }
+
+    elif content == u"점심":
+        if (ChoiceUrl != urlorum1):  #오름1동 점심이 아닐경우 정상출력
+            response_data = {
+                "version": "2.0",
+                "template": {
+                    "outputs": [{"simpleText": {"text": returnMenu(ChoiceUrl, ChoiceDay)}}],
+                    "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"},
+                                     ]
+                }
+            }
+
+
+        else:  #오름1동 점심일경우 경고 메시지 출력
+            response_data = {
+                "version": "2.0",
+                "template": {
+                    "outputs": [{"simpleText": {"text": Restaurant[ChoiceRes] + "은 아침이 없습니다. 다시 선택해 주세요."}}],
+                    "quickReplies": [{"label": "아침", "action": "message", "messageText": "아침"},
+                                     {"label": "점심", "action": "message", "messageText": "점심"},
+                                     {"label": "저녁", "action": "message", "messageText": "저녁"}, ]}
+            }
 
     elif content==u"저녁":
         response_data={
@@ -189,8 +219,12 @@ def bob():
             "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"},]}
         }
 
+
     elif content==u"처음으로":
         response_data=jsonChoiceRes
+
+    else :
+        response_data = jsonChoiceRes
 
     return jsonify(response_data)
 
