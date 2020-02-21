@@ -1,9 +1,10 @@
 from flask import Flask,request,jsonify
 import bs4
 import urllib.request
+import time
+
 import os
 import sys
-import time
 
 app = Flask(__name__)
 
@@ -40,28 +41,31 @@ jsonChoiceDay = {
                                   {"label": "목", "action": "message", "messageText": "목"},
                                   {"label": "금", "action": "message", "messageText": "금"},
                                   {"label": "토", "action": "message", "messageText": "토"},
-                                  {"label": "일", "action": "message", "messageText": "일"}]}
+                                  {"label": "일", "action": "message", "messageText": "일"}
+                                  ]
+                 }
 }
 
 jsonChoiceRes = {
     "version": "2.0",
-    "template": {
-        "outputs": [{"simpleText": {"text": "식당을 선택해 주세요"}}],
-        "quickReplies": [{"label": "학생식당", "action": "message", "messageText": "학생식당"},
-                         {"label": "푸름관", "action": "message", "messageText": "푸름관"},
-                         {"label": "오름1동", "action": "message", "messageText": "오름1동"},
-                         {"label": "오름3동", "action": "message", "messageText": "오름3동"},
-                         {"label": "교직원", "action": "message", "messageText": "교직원"},
-                         ]}
+    "template": {"outputs": [{"simpleText": {"text": "식당을 선택해 주세요"}}],
+                 "quickReplies": [{"label": "학생식당", "action": "message", "messageText": "학생식당"},
+                                  {"label": "푸름관", "action": "message", "messageText": "푸름관"},
+                                  {"label": "오름1동", "action": "message", "messageText": "오름1동"},
+                                  {"label": "오름3동", "action": "message", "messageText": "오름3동"},
+                                  {"label": "교직원", "action": "message", "messageText": "교직원"},
+                                  ]
+                 }
 }
 
 jsonChoiceTime = {
     "version": "2.0",
-    "template": {
-        "outputs": [{"simpleText": {"text": "시간을 선택해 주세요"}}],
-        "quickReplies": [{"label": "아침", "action": "message", "messageText": "아침"},
-                         {"label": "점심", "action": "message", "messageText": "점심"},
-                         {"label": "저녁", "action": "message", "messageText": "저녁"}, ]}
+    "template": {"outputs": [{"simpleText": {"text": "시간을 선택해 주세요"}}],
+                 "quickReplies": [{"label": "아침", "action": "message", "messageText": "아침"},
+                                  {"label": "점심", "action": "message", "messageText": "점심"},
+                                  {"label": "저녁", "action": "message", "messageText": "저녁"},
+                                  ]
+                 }
 }
 
 
@@ -91,16 +95,12 @@ def bob():
     global jsonChoiceRes
     global jsonChoiceTime
 
-    today=time.localtime().tm_wday #저녁일 경우에는 +7
-
-
     if content==u"학생식당":
         response_data=jsonChoiceDay
         ChoiceUrl=urlStudent
         ChoiceRes=0
 
     elif content==u"푸름관":
-        print("푸름관")
         response_data=jsonChoiceDay
         ChoiceUrl=urlPorum
         ChoiceRes = 1
@@ -157,15 +157,17 @@ def bob():
             response_data={
             "version": "2.0",
             "template": {
-                "outputs": [{"carousel": {"type": "basicCard", "items": [{"title": "", "description": returnMenu(ChoiceUrl,ChoiceDay)}]}}],
-                "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"},]}
+                "outputs": [{"simpleText": {"text": returnMenu(ChoiceUrl,ChoiceDay)}}],
+                "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"},
+                                 ]
+                         }
             }
+
         else:   #오름1동 아침이 아닐경우 경고 메시지 출력
             response_data = {
                 "version": "2.0",
                 "template": {
-                    "outputs": [
-                        {"carousel": {"type": "basicCard", "items": [{"title": "", "description": Restaurant[ChoiceRes]+"은 아침이 없습니다. 다시 선택해 주세요."}]}}],
+                    "outputs": [{"simpleText": {"text": Restaurant[ChoiceRes]+"은 아침이 없습니다. 다시 선택해 주세요."}}],
                     "quickReplies": [{"label": "아침", "action": "message", "messageText": "아침"},
                                      {"label": "점심", "action": "message", "messageText": "점심"},
                                      {"label": "저녁", "action": "message", "messageText": "저녁"}, ]}
@@ -175,7 +177,7 @@ def bob():
         response_data={
         "version": "2.0",
         "template": {
-            "outputs": [{"carousel": {"type": "basicCard", "items": [{"title": "", "description": returnMenu(ChoiceUrl,ChoiceDay)}]}}],
+            "outputs": [{"simpleText": {"text": returnMenu(ChoiceUrl,ChoiceDay)}}],
             "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"},]}
         }
 
@@ -183,7 +185,7 @@ def bob():
         response_data={
         "version": "2.0",
         "template": {
-            "outputs": [{"carousel": {"type": "basicCard", "items": [{"title": "", "description": returnMenu(ChoiceUrl,ChoiceDay+7)}]}}],
+            "outputs": [{"simpleText": {"text": returnMenu(ChoiceUrl,ChoiceDay)}}],
             "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"},]}
         }
 
