@@ -97,15 +97,16 @@ def returnMenu(url,num):  #식단을 보여줄수 있게 하는 함수 (링크,�
         return menu[num].text.strip()
 
 def returnAvaliableTime(index):  #식당 이용 가능 시간을 리턴하는 함수
+    temp={
+         "version": "2.0",
+         "template": {
+             "outputs": [{"simpleText": {"text": index}}],
+             "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"},
+                              ]
+                     }
+         }
 
-    return jsonify({
-                "version": "2.0",
-                "template": {
-                    "outputs": [{"simpleText": {"text": index}}],
-                    "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"},
-                                     ]
-                            }
-                    })
+    return temp
 
 
 @app.route('/message', methods=['POST'])  #json으로 들어온 사용자 요청을 보고 판단
