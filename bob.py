@@ -23,12 +23,10 @@ urlorum1="http://dorm.kumoh.ac.kr/dorm/restaurant_menu02.do"
 urlorum3="http://dorm.kumoh.ac.kr/dorm/restaurant_menu03.do"
 
 '''
-
 월요일~일요일 중식 : 0~6
 월요일~일요일 석식 : 7~13
 
 @@@ 예외적으로 오름 1동은 중식->조식 @@@
-
 '''
 
 jsonChoiceDay = {
@@ -69,6 +67,21 @@ jsonChoiceTime = {
                  }
 }
 
+jsonChoiceAvailableTime = {
+    "version": "2.0",
+    "template": {"outputs": [{"simpleText": {"text": "식당을 선택해 주세요"}}],
+                 "quickReplies": [{"label": "학생식당 시간", "action": "message", "messageText": "학생식당"},
+                                  {"label": "기숙사", "action": "message", "messageText": "푸름관"},
+                                  {"label": "기숙사", "action": "message", "messageText": "오름1동"},
+                                  {"label": "기숙사", "action": "message", "messageText": "오름3동"},
+                                  {"label": "교직원 시간", "action": "message", "messageText": "교직원"},
+                                  ]
+                 }
+}
+
+StudentTime="조식시간 : 08:30 ~ 09:30\n중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30\n토 : 10:00~14:00\n일,공휴일 : 휴무"
+ProfessTime="중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30"
+DomitoryTime="학기중\n\n조식 시간\n- 평일 : 07:30 ~ 09:30\n- 주말 : 08:00 ~ 09:30\n중식 시간\n- 평일 : 11:30 ~ 13:30\n- 주말 : 12:00 ~ 13:30\n석식 시간\n- 평일 : 17:00 ~ 19:00\n- 주말 : 17:00 ~ 18:30\n방학중\n\n조식 시간- 08:00 ~ 09:30\n중식 시간- 12:00 ~ 13:30\n석식 시간- 17:00 ~ 18:30"
 
 
 def returnMenu(url,num):  #식단을 보여줄수 있게 하는 함수 (링크,식단종류)
@@ -83,17 +96,16 @@ def returnMenu(url,num):  #식단을 보여줄수 있게 하는 함수 (링크,�
         menu = html.findAll("ul", {"class": "s-dot"})
         return menu[num].text.strip()
 
+def returnAvaliableTime(index):  #식당 이용 가능 시간을 리턴하는 함수
 
-def returnAvaliableTimeDormitory(url):  #기숙사 식당 이용 시간을 리턴하는 함수
-    html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
-    Time=html.findAll("div",{"class":"contents-area"})
-    return Time[3].text + Time[4].text
-
-
-def returnAvaliableTime(url):  #전체식당 이용 시간을 리턴하는 함수
-    html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
-    Time=html.findAll("ul",{"class":"ul-h-list01"})
-    return Time[1].text
+    return jsonify({
+                "version": "2.0",
+                "template": {
+                    "outputs": [{"simpleText": {"text": index}}],
+                    "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"},
+                                     ]
+                            }
+                    })
 
 
 @app.route('/message', methods=['POST'])  #json으로 들어온 사용자 요청을 보고 판단
@@ -219,9 +231,20 @@ def bob():
             "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"},]}
         }
 
-
     elif content==u"처음으로":
         response_data=jsonChoiceRes
+
+    elif content==u"식당 이용 가능 시간":
+        response_data=jsonChoiceAvailableTime
+
+    elif content==u"학생식당 시간":
+        response_data=returnAvaliableTime(StudentTime)
+
+    elif content == u"기숙사 시간":
+        response_data = returnAvaliableTime(DomitoryTime)
+
+    elif content == u"교직원 시간":
+        response_data = returnAvaliableTime(ProfessTime)
 
     else :
         response_data = jsonChoiceRes
