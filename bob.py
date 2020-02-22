@@ -205,7 +205,7 @@ def bob():
             response_data = {
                 "version": "2.0",
                 "template": {
-                    "outputs": [{"simpleText": {"text": Restaurant[ChoiceRes] + "은 아침이 없습니다. 다시 선택해 주세요."}}],
+                    "outputs": [{"simpleText": {"text": Restaurant[ChoiceRes] + "은 점심이 없습니다. 다시 선택해 주세요."}}],
                     "quickReplies": [{"label": "아침", "action": "message", "messageText": "아침"},
                                      {"label": "점심", "action": "message", "messageText": "점심"},
                                      {"label": "저녁", "action": "message", "messageText": "저녁"}, ]}
