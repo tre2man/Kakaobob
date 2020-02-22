@@ -70,11 +70,11 @@ jsonChoiceTime = {
 jsonChoiceAvailableTime = {
     "version": "2.0",
     "template": {"outputs": [{"simpleText": {"text": "식당을 선택해 주세요"}}],
-                 "quickReplies": [{"label": "학생식당 시간", "action": "message", "messageText": "학생식당"},
-                                  {"label": "기숙사", "action": "message", "messageText": "푸름관"},
-                                  {"label": "기숙사", "action": "message", "messageText": "오름1동"},
-                                  {"label": "기숙사", "action": "message", "messageText": "오름3동"},
-                                  {"label": "교직원 시간", "action": "message", "messageText": "교직원"},
+                 "quickReplies": [{"label": "학생식당", "action": "message", "messageText": "학생식당 시간"},
+                                  {"label": "푸름관", "action": "message", "messageText": "기숙사 시간"},
+                                  {"label": "오름1동", "action": "message", "messageText": "기숙사 시간"},
+                                  {"label": "오름3동", "action": "message", "messageText": "기숙사 시간"},
+                                  {"label": "교직원", "action": "message", "messageText": "교직원 시간"},
                                   ]
                  }
 }
