@@ -32,6 +32,8 @@ urlBus = "http://bis.gumi.go.kr/map/BusMap.do"
 @@@ 예외적으로 오름 1동은 중식->석식 @@@
 '''
 
+
+
 def returnMenu(url,num):  #식단을 보여줄수 있게 하는 함수 (링크,식단종류)
     html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
     menus=html.find("td")

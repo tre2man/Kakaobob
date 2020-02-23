@@ -13,8 +13,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bob.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="96" column="29" selection-start-line="96" selection-start-column="29" selection-end-line="96" selection-end-column="29" />
+            <state relative-caret-position="460">
+              <caret line="101" column="22" lean-forward="true" selection-start-line="101" selection-start-column="22" selection-end-line="101" selection-end-column="22" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -25,7 +25,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bob2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1120">
+            <state relative-caret-position="651">
               <caret line="61" selection-start-line="61" selection-end-line="61" selection-end-column="11" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
@@ -37,8 +37,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="900">
-              <caret line="50" column="34" lean-forward="true" selection-start-line="50" selection-start-column="34" selection-end-line="50" selection-end-column="34" />
+            <state relative-caret-position="340">
+              <caret line="34" selection-start-line="34" selection-end-line="34" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -400,14 +400,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1218" y="0" width="1240" height="1087" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.110648915" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.110648915" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2224554" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.2224554" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39874083" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -485,19 +484,19 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/jy.py" />
-    <entry file="file://$PROJECT_DIR$/bob.py">
+    <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="96" column="29" selection-start-line="96" selection-start-column="29" selection-end-line="96" selection-end-column="29" />
+        <state relative-caret-position="340">
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
           <folding>
-            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bob2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1120">
+        <state relative-caret-position="651">
           <caret line="61" selection-start-line="61" selection-end-line="61" selection-end-column="11" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
@@ -505,12 +504,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
+    <entry file="file://$PROJECT_DIR$/bob.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="50" column="34" lean-forward="true" selection-start-line="50" selection-start-column="34" selection-end-line="50" selection-end-column="34" />
+        <state relative-caret-position="460">
+          <caret line="101" column="22" lean-forward="true" selection-start-line="101" selection-start-column="22" selection-end-line="101" selection-end-column="22" />
           <folding>
-            <element signature="e#0#41#0" expanded="true" />
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>

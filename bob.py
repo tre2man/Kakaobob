@@ -94,7 +94,12 @@ def returnMenu(url,num):  #식단을 보여줄수 있게 하는 함수 (링크,�
     else:                              #식단이 있을경우
         html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
         menu = html.findAll("ul", {"class": "s-dot"})
-        return menu[num].text
+        menuEnd = str(menu[num].text.rstrip("\n"))
+        print(menuEnd)
+        if menuEnd != "" :
+            return menuEnd
+        else:
+            return " "
 
 def returnAvaliableTime(index):  #식당 이용 가능 시간을 리턴하는 함수
     temp={
