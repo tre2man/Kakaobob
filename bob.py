@@ -31,7 +31,7 @@ urlorum3="http://dorm.kumoh.ac.kr/dorm/restaurant_menu03.do"
 
 jsonChoiceDay = {
     "version": "2.0",
-    "template": {"outputs": [{"simpleText": {"text": "날짜를 선택해 주세요"}}],
+    "template": {"outputs": [{"simpleText": {"text": "날짜를 선택해 주세요."}}],
                  "quickReplies": [{"label": "오늘", "action": "message", "messageText": "오늘"},
                                   {"label": "월", "action": "message", "messageText": "월"},
                                   {"label": "화", "action": "message", "messageText": "화"},
@@ -46,7 +46,7 @@ jsonChoiceDay = {
 
 jsonChoiceRes = {
     "version": "2.0",
-    "template": {"outputs": [{"simpleText": {"text": "식당을 선택해 주세요"}}],
+    "template": {"outputs": [{"simpleText": {"text": "식당을 선택해 주세요."}}],
                  "quickReplies": [{"label": "학생식당", "action": "message", "messageText": "학생식당"},
                                   {"label": "푸름관", "action": "message", "messageText": "푸름관"},
                                   {"label": "오름1동", "action": "message", "messageText": "오름1동"},
@@ -59,7 +59,7 @@ jsonChoiceRes = {
 
 jsonChoiceTime = {
     "version": "2.0",
-    "template": {"outputs": [{"simpleText": {"text": "시간을 선택해 주세요"}}],
+    "template": {"outputs": [{"simpleText": {"text": "시간을 선택해 주세요."}}],
                  "quickReplies": [{"label": "아침", "action": "message", "messageText": "아침"},
                                   {"label": "점심", "action": "message", "messageText": "점심"},
                                   {"label": "저녁", "action": "message", "messageText": "저녁"},
@@ -69,7 +69,7 @@ jsonChoiceTime = {
 
 jsonChoiceAvailableTime = {
     "version": "2.0",
-    "template": {"outputs": [{"simpleText": {"text": "식당을 선택해 주세요"}}],
+    "template": {"outputs": [{"simpleText": {"text": "식당을 선택해 주세요."}}],
                  "quickReplies": [{"label": "학생식당", "action": "message", "messageText": "학생식당 시간"},
                                   {"label": "푸름관", "action": "message", "messageText": "기숙사 시간"},
                                   {"label": "오름1동", "action": "message", "messageText": "기숙사 시간"},
@@ -94,7 +94,7 @@ def returnMenu(url,num):  #식단을 보여줄수 있게 하는 함수 (링크,�
     else:                              #식단이 있을경우
         html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
         menu = html.findAll("ul", {"class": "s-dot"})
-        return menu[num].text.strip()
+        return menu[num].text
 
 def returnAvaliableTime(index):  #식당 이용 가능 시간을 리턴하는 함수
     temp={
