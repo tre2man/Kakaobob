@@ -54,6 +54,7 @@ jsonChoiceRes = {
                                   {"label": "오름1동", "action": "message", "messageText": "오름1동"},
                                   {"label": "오름3동", "action": "message", "messageText": "오름3동"},
                                   {"label": "교직원", "action": "message", "messageText": "교직원"},
+                                  {"label": "분식당", "action": "message", "messageText": "분식당"}
                                   ]
                  }
 }
@@ -203,7 +204,7 @@ def bob():
         ChoiceDay = 6
         response_data = returnMenujson(ChoiceUrl,ChoiceDay)
 
-    elif content==u"처음으로":
+    elif content==u"처음으로" :
         response_data=jsonChoiceRes
 
     elif content==u"식당 이용 가능 시간":
