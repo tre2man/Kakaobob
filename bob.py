@@ -33,7 +33,7 @@ urlBunsic="http://www.kumoh.ac.kr/ko/restaurant04.do"
 
 jsonChoiceDay = {
     "version": "2.0",
-    "template": {"outputs": [{"simpleText": {"text": "요일을 선택해 주세요.\n\n오늘은"+str(time.localtime().tm_year)+"년"+str(time.localtime().tm_mon)+"월"+str(time.localtime().tm_mday)+"일"+week[time.localtime().tm_wday]+"입니다."}}],
+    "template": {"outputs": [{"simpleText": {"text": "요일을 선택해 주세요.\n\n오늘은 "+str(time.localtime().tm_year)+"년 "+str(time.localtime().tm_mon)+"월 "+str(time.localtime().tm_mday)+"일 "+week[time.localtime().tm_wday]+" 입니다."}}],
                  "quickReplies": [{"label": "오늘", "action": "message", "messageText": "오늘"},
                                   {"label": "월요일", "action": "message", "messageText": "월요일"},
                                   {"label": "화요일", "action": "message", "messageText": "화요일"},
@@ -48,7 +48,7 @@ jsonChoiceDay = {
 
 jsonChoiceRes = {
     "version": "2.0",
-    "template": {"outputs": [{"simpleText": {"text": "식당을 선택해 주세요."}}],
+    "template": {"outputs": [{"simpleText": {"text": "🍽식당을 선택해 주세요.🍽"}}],
                  "quickReplies": [{"label": "학생식당", "action": "message", "messageText": "학생식당"},
                                   {"label": "푸름관", "action": "message", "messageText": "푸름관"},
                                   {"label": "오름1동", "action": "message", "messageText": "오름1동"},
