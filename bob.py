@@ -176,31 +176,31 @@ def bob():
         ChoiceDay = time.localtime().tm_wday
         response_data = returnMenujson(ChoiceUrl,ChoiceDay)
 
-    elif content==u"월":
+    elif content==u"월요일":
         ChoiceDay = 0
         response_data = returnMenujson(ChoiceUrl,ChoiceDay)
 
-    elif content==u"화":
+    elif content==u"화요일":
         ChoiceDay = 1
         response_data = returnMenujson(ChoiceUrl,ChoiceDay)
 
-    elif content==u"수":
+    elif content==u"수요일":
         ChoiceDay = 2
         response_data = returnMenujson(ChoiceUrl,ChoiceDay)
 
-    elif content==u"목":
+    elif content==u"목요일":
         ChoiceDay = 3
         response_data = returnMenujson(ChoiceUrl,ChoiceDay)
 
-    elif content==u"금":
+    elif content==u"금요일":
         ChoiceDay = 4
         response_data = returnMenujson(ChoiceUrl,ChoiceDay)
 
-    elif content==u"토":
+    elif content==u"토요일":
         ChoiceDay = 5
         response_data = returnMenujson(ChoiceUrl,ChoiceDay)
 
-    elif content==u"일":
+    elif content==u"일요일":
         ChoiceDay = 6
         response_data = returnMenujson(ChoiceUrl,ChoiceDay)
 
