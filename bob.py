@@ -8,13 +8,13 @@ import sys
 
 app = Flask(__name__)
 
-#식당성정->날짜설정->아침점심저녁 설정->처음으로
+#식당성정->날짜설정->식단확인->처음으로
 
 Restaurant=["학생식당","푸름관","오름1동","오름3동","교직원 식당"]
 week=["월요일","화요일","수요일","목요일","금요일","토요일","일요일"]
 
 ChoiceUrl=""
-ChoiceDay=0
+ChoiceWeek=0
 ChoiceRes=0
 
 urlStudent="http://www.kumoh.ac.kr/ko/restaurant01.do"
@@ -31,7 +31,7 @@ urlBunsic="http://www.kumoh.ac.kr/ko/restaurant04.do"
 @@@ 예외적으로 오름 1동은 중식->조식 @@@
 '''
 
-jsonChoiceDay = {
+jsonChoiceday = {
     "version": "2.0",
     "template": {"outputs": [{"simpleText": {"text": "요일을 선택해 주세요.\n\n오늘은 "+str(time.localtime().tm_year)+"년 "+str(time.localtime().tm_mon)+"월 "+str(time.localtime().tm_mday)+"일 "+week[time.localtime().tm_wday]+" 입니다."}}],
                  "quickReplies": [{"label": "오늘", "action": "message", "messageText": "오늘"},
@@ -74,7 +74,7 @@ ProfessTime="중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30"
 DomitoryTime="학기중\n\n조식 시간\n- 평일 : 07:30 ~ 09:30\n- 주말 : 08:00 ~ 09:30\n중식 시간\n- 평일 : 11:30 ~ 13:30\n- 주말 : 12:00 ~ 13:30\n석식 시간\n- 평일 : 17:00 ~ 19:00\n- 주말 : 17:00 ~ 18:30\n\n방학중\n\n조식 시간- 08:00 ~ 09:30\n중식 시간- 12:00 ~ 13:30\n석식 시간- 17:00 ~ 18:30"
 
 
-def returnMenu(url,num):  #식단을 보여줄수 있게 하는 함수 (링크,식단종류)
+def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (링크,식단종류)
 
     global ChoiceRes
 
@@ -105,7 +105,8 @@ def returnMenu(url,num):  #식단을 보여줄수 있게 하는 함수 (링크,�
         else:
             return "등록된 메뉴가 없습니다."
 
-def returnAvaliableTime(index):  #식당 이용 가능 시간을 리턴하는 함수
+def returnAvaliableTime(index):  #식당 이용 가능 시간을 json으로 리턴하는 함수
+
     temp={
          "version": "2.0",
          "template": {
@@ -118,7 +119,8 @@ def returnAvaliableTime(index):  #식당 이용 가능 시간을 리턴하는 �
     return temp
 
 
-def returnMenujson(url,num):
+def returnMenujson(url,num):  #식당 메뉴를 json으로 리턴하는 함수
+
     temp={
         "version": "2.0",
         "template": {"outputs": [{"simpleText": {"text": returnMenu(url,num)}}],
@@ -136,73 +138,69 @@ def bob():
     content = content['userRequest']
     content = content['utterance']
 
-    global ChoiceUrl
-    global ChoiceDay
-    global ChoiceRes
-    global jsonChoiceDay
-    global jsonChoiceRes
+    global ChoiceUrl,ChoiceRes,ChoiceRes,jsonChoiceday,jsonChoiceRes
 
     if content==u"학생식당":
-        response_data=jsonChoiceDay
+        response_data=jsonChoiceday
         ChoiceUrl=urlStudent
         ChoiceRes=0
 
     elif content==u"푸름관":
-        response_data=jsonChoiceDay
+        response_data=jsonChoiceday
         ChoiceUrl=urlPorum
         ChoiceRes = 1
 
     elif content==u"오름1동":
-        response_data=jsonChoiceDay
+        response_data=jsonChoiceday
         ChoiceUrl=urlorum1
         ChoiceRes = 2
 
     elif content == u"오름3동":
-        response_data=jsonChoiceDay
+        response_data=jsonChoiceday
         ChoiceUrl=urlorum3
         ChoiceRes = 3
 
     elif content==u"교직원":
-        response_data=jsonChoiceDay
+        response_data=jsonChoiceday
         ChoiceUrl=urlProfess
         ChoiceRes = 4
 
     elif content==u"분식당":
-        response_data=jsonChoiceDay
+        response_data=jsonChoiceday
         ChoiceUrl=urlBunsic
         ChoiceRes = 5
 
     elif content==u"오늘":
-        ChoiceDay = time.localtime().tm_wday
-        response_data = returnMenujson(ChoiceUrl,ChoiceDay)
+        ChoiceWeek = time.localtime().tm_wday
+        response_data = returnMenujson(ChoiceUrl,ChoiceWeek)
 
     elif content==u"월요일":
-        ChoiceDay = 0
-        response_data = returnMenujson(ChoiceUrl,ChoiceDay)
+        ChoiceWeek = 0
+        response_data = returnMenujson(ChoiceUrl,ChoiceWeek)
 
     elif content==u"화요일":
-        ChoiceDay = 1
-        response_data = returnMenujson(ChoiceUrl,ChoiceDay)
+        ChoiceWeek = 1
+        response_data = returnMenujson(ChoiceUrl,ChoiceWeek)
 
     elif content==u"수요일":
-        ChoiceDay = 2
-        response_data = returnMenujson(ChoiceUrl,ChoiceDay)
+        ChoiceWeek = 2
+        response_data = returnMenujson(ChoiceUrl,ChoiceWeek)
 
     elif content==u"목요일":
-        ChoiceDay = 3
-        response_data = returnMenujson(ChoiceUrl,ChoiceDay)
+        ChoiceWeek = 3
+        response_data = returnMenujson(ChoiceUrl,ChoiceWeek)
 
     elif content==u"금요일":
-        ChoiceDay = 4
-        response_data = returnMenujson(ChoiceUrl,ChoiceDay)
+        ChoiceWeek = 4
+        response_data = returnMenujson(ChoiceUrl,ChoiceWeek)
 
     elif content==u"토요일":
-        ChoiceDay = 5
-        response_data = returnMenujson(ChoiceUrl,ChoiceDay)
+        ChoiceWeek = 5
+        response_data = returnMenujson(ChoiceUrl,ChoiceWeek)
 
     elif content==u"일요일":
-        ChoiceDay = 6
-        response_data = returnMenujson(ChoiceUrl,ChoiceDay)
+        ChoiceWeek = 6
+        response_data = returnMenujson(ChoiceUrl,ChoiceWeek)
 
     elif content==u"처음으로" :
         response_data=jsonChoiceRes
