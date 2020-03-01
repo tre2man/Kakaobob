@@ -34,7 +34,7 @@ urlBunsic="http://www.kumoh.ac.kr/ko/restaurant04.do"
 
 jsonChoiceRes = {
     "version": "2.0",
-    "template": {"outputs": [{"simpleText": {"text": "🍽식당을 선택해 주세요.🍽"}}],
+    "template": {"outputs": [{"simpleText": {"text": "🍽 식당을 선택해 주세요. 🍽"}}],
                  "quickReplies": [{"label": "학생식당", "action": "message", "messageText": "학생식당"},
                                   {"label": "푸름관", "action": "message", "messageText": "푸름관"},
                                   {"label": "오름1동", "action": "message", "messageText": "오름1동"},
@@ -72,7 +72,7 @@ def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (식당종류
     menu=str(menus.text)  #bs4 자료형을 String 형태로 변환, 식단의 존재 유무 판별
 
     if(menu=="등록된 메뉴가 없습니다."): #식단이 없을경우(기숙사 식당 주로)
-        return menu
+        return "등록된 메뉴가 없습니다. 😥"
 
     else:                              #식단이 있을경우
         menu = html.findAll("ul", {"class": "s-dot"})
@@ -84,17 +84,17 @@ def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (식당종류
         if menuEnd != "" :
             if ChoiceRes==2: #오름1동, 중식->조식
                 menuEnd2 = str(menu[num + 7].text.rstrip("\n"))
-                return "선택한 날짜 : "+day+"\n"+"아침메뉴\n"+menuEnd.lstrip()+"\n\n저녁메뉴\n\n"+menuEnd2.lstrip()
+                return "선택한 날짜 : "+day+"\n"+"아침메뉴\n\n"+menuEnd.lstrip()+"\n\n저녁메뉴\n\n"+menuEnd2.lstrip()
 
             elif ChoiceRes==5: #분식당, 1일 1메뉴
                 return "선택한 날짜 : "+day+"\n"+menuEnd.lstrip()
 
             else:  #점심과 저녁
                 menuEnd2 = str(menu[num + 7].text.rstrip("\n"))
-                return "선택한 날짜 : "+day+"\n"+"점심메뉴\n"+menuEnd.lstrip()+"\n\n저녁메뉴\n\n"+menuEnd2.lstrip()
+                return "선택한 날짜 : "+day+"\n"+"점심메뉴\n\n"+menuEnd.lstrip()+"\n\n저녁메뉴\n\n"+menuEnd2.lstrip()
 
         else:
-            return "등록된 메뉴가 없습니다."
+            return "등록된 메뉴가 없습니다. 😥"
 
 
 def returnAvaliableTime(index):  #식당 이용 가능 시간을 json으로 리턴하는 함수
@@ -129,7 +129,7 @@ def returnjsonChoiceday():
     temp = {
         "version": "2.0",
         "template": {"outputs": [{"simpleText": {
-            "text": "요일을 선택해 주세요.\n\n오늘은 " + str(time.localtime().tm_year) + "년 " + str(
+            "text": "📅 요일을 선택해 주세요. 📅\n\n오늘은 " + str(time.localtime().tm_year) + "년 " + str(
                 time.localtime().tm_mon) + "월 " + str(time.localtime().tm_mday) + "일 " + week[
                         time.localtime().tm_wday] + " 입니다."}}],
                      "quickReplies": [{"label": "오늘", "action": "message", "messageText": "오늘"},
