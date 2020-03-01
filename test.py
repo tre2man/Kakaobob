@@ -75,7 +75,7 @@ ProfessTime="중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30"
 DomitoryTime="학기중\n\n조식 시간\n- 평일 : 07:30 ~ 09:30\n- 주말 : 08:00 ~ 09:30\n중식 시간\n- 평일 : 11:30 ~ 13:30\n- 주말 : 12:00 ~ 13:30\n석식 시간\n- 평일 : 17:00 ~ 19:00\n- 주말 : 17:00 ~ 18:30\n\n방학중\n\n조식 시간- 08:00 ~ 09:30\n중식 시간- 12:00 ~ 13:30\n석식 시간- 17:00 ~ 18:30"
 
 
-def returnMenu(url,num):  #식단을 보여줄수 있게 하는 함수 (링크,식단종류)
+def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (식당종류,날짜)
 
     global ChoiceRes
 
@@ -87,26 +87,31 @@ def returnMenu(url,num):  #식단을 보여줄수 있게 하는 함수 (링크,�
         return menu
 
     else:                              #식단이 있을경우
-        html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
         menu = html.findAll("ul", {"class": "s-dot"})
         menuEnd = str(menu[num].text.rstrip("\n"))
 
+        days=html.findAll("th",{"scope":{"col"}})
+        day=str(days[num].text.lstrip())
+
         if menuEnd != "" :
-            if ChoiceRes==1: #중식->조식
+            if ChoiceRes==2: #오름1동, 중식->조식
                 menuEnd2 = str(menu[num + 7].text.rstrip("\n"))
-                return "아침메뉴\n\n"+menuEnd.lstrip()+"\n\n저녁메뉴\n\n"+menuEnd2.lstrip()
+                return "선택한 날짜 : "+day+"\n"+"아침메뉴\n"+menuEnd.lstrip()+"\n\n저녁메뉴\n\n"+menuEnd2.lstrip()
 
             elif ChoiceRes==5: #분식당, 1일 1메뉴
-                return menuEnd.lstrip()
+                return "선택한 날짜 : "+day+"\n"+menuEnd.lstrip()
 
             else:  #점심과 저녁
                 menuEnd2 = str(menu[num + 7].text.rstrip("\n"))
-                return "점심메뉴\n\n"+menuEnd.lstrip()+"\n\n저녁메뉴\n\n"+menuEnd2.lstrip()
+                return "선택한 날짜 : "+day+"\n"+"점심메뉴\n"+menuEnd.lstrip()+"\n\n저녁메뉴\n\n"+menuEnd2.lstrip()
 
         else:
             return "등록된 메뉴가 없습니다."
 
 
-ChoiceDay=4
-ChoiceRes=5
-print(time.localtime())
+ChoiceDay=0
+ChoiceRes=4
+
+Restaurant=["학생식당","푸름관","오름1동","오름3동","교직원 식당","분식당"]
+
+print(returnMenu(urlProfess,ChoiceDay))

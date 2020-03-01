@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 #식당성정->날짜설정->식단확인->처음으로
 
-Restaurant=["학생식당","푸름관","오름1동","오름3동","교직원 식당"]
+Restaurant=["학생식당","푸름관","오름1동","오름3동","교직원 식당","분식당"]
 week=["월요일","화요일","수요일","목요일","금요일","토요일","일요일"]
 
 ChoiceUrl=""
@@ -63,7 +63,7 @@ DomitoryTime=str("학기중\n\n조식 시간\n- 평일 : 07:30 ~ 09:30\n- 주말
                  "\n- 주말 : 12:00 ~ 13:30\n석식 시간\n- 평일 : 17:00 ~ 19:00\n- 주말 : 17:00 ~ 18:30\n\n방학중\n\n"
                  "조식 시간- 08:00 ~ 09:30\n중식 시간- 12:00 ~ 13:30\n석식 시간- 17:00 ~ 18:30")
 
-def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (링크,식단종류)
+def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (식당종류,날짜)
 
     global ChoiceRes
 
@@ -78,20 +78,24 @@ def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (링크,식�
         menu = html.findAll("ul", {"class": "s-dot"})
         menuEnd = str(menu[num].text.rstrip("\n"))
 
+        days=html.findAll("th",{"scope":{"col"}})
+        day=str(days[num].text.lstrip())
+
         if menuEnd != "" :
-            if ChoiceRes==1: #중식->조식
+            if ChoiceRes==2: #오름1동, 중식->조식
                 menuEnd2 = str(menu[num + 7].text.rstrip("\n"))
-                return "아침메뉴\n\n"+menuEnd.lstrip()+"\n\n저녁메뉴\n\n"+menuEnd2.lstrip()
+                return "선택한 날짜 : "+day+"\n"+"아침메뉴\n"+menuEnd.lstrip()+"\n\n저녁메뉴\n\n"+menuEnd2.lstrip()
 
             elif ChoiceRes==5: #분식당, 1일 1메뉴
-                return menuEnd.lstrip()
+                return "선택한 날짜 : "+day+"\n"+menuEnd.lstrip()
 
             else:  #점심과 저녁
                 menuEnd2 = str(menu[num + 7].text.rstrip("\n"))
-                return "점심메뉴\n\n"+menuEnd.lstrip()+"\n\n저녁메뉴\n\n"+menuEnd2.lstrip()
+                return "선택한 날짜 : "+day+"\n"+"점심메뉴\n"+menuEnd.lstrip()+"\n\n저녁메뉴\n\n"+menuEnd2.lstrip()
 
         else:
             return "등록된 메뉴가 없습니다."
+
 
 def returnAvaliableTime(index):  #식당 이용 가능 시간을 json으로 리턴하는 함수
 
@@ -119,6 +123,7 @@ def returnMenujson(url,num):  #식당 메뉴를 json으로 리턴하는 함수
 
     return temp
 
+
 def returnjsonChoiceday():
 
     temp = {
@@ -140,6 +145,7 @@ def returnjsonChoiceday():
     }
 
     return temp
+
 
 @app.route('/message', methods=['POST'])  #json으로 들어온 사용자 요청을 보고 판단
 def bob():
