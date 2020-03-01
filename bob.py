@@ -55,10 +55,13 @@ jsonChoiceAvailableTime = {
                  }
 }
 
-StudentTime="조식시간 : 08:30 ~ 09:30\n중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30\n토 : 10:00~14:00\n일,공휴일 : 휴무"
-ProfessTime="중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30"
-DomitoryTime="학기중\n\n조식 시간\n- 평일 : 07:30 ~ 09:30\n- 주말 : 08:00 ~ 09:30\n중식 시간\n- 평일 : 11:30 ~ 13:30\n- 주말 : 12:00 ~ 13:30\n석식 시간\n- 평일 : 17:00 ~ 19:00\n- 주말 : 17:00 ~ 18:30\n\n방학중\n\n조식 시간- 08:00 ~ 09:30\n중식 시간- 12:00 ~ 13:30\n석식 시간- 17:00 ~ 18:30"
+StudentTime=str("조식시간 : 08:30 ~ 09:30\n중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30\n토 : 10:00~14:00\n일,공휴일 : 휴무")
 
+ProfessTime=str("중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30")
+
+DomitoryTime=str("학기중\n\n조식 시간\n- 평일 : 07:30 ~ 09:30\n- 주말 : 08:00 ~ 09:30\n중식 시간\n- 평일 : 11:30 ~ 13:30"
+                 "\n- 주말 : 12:00 ~ 13:30\n석식 시간\n- 평일 : 17:00 ~ 19:00\n- 주말 : 17:00 ~ 18:30\n\n방학중\n\n"
+                 "조식 시간- 08:00 ~ 09:30\n중식 시간- 12:00 ~ 13:30\n석식 시간- 17:00 ~ 18:30")
 
 def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (링크,식단종류)
 
@@ -72,7 +75,6 @@ def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (링크,식�
         return menu
 
     else:                              #식단이 있을경우
-        html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
         menu = html.findAll("ul", {"class": "s-dot"})
         menuEnd = str(menu[num].text.rstrip("\n"))
 
@@ -124,7 +126,7 @@ def returnjsonChoiceday():
         "template": {"outputs": [{"simpleText": {
             "text": "요일을 선택해 주세요.\n\n오늘은 " + str(time.localtime().tm_year) + "년 " + str(
                 time.localtime().tm_mon) + "월 " + str(time.localtime().tm_mday) + "일 " + week[
-                        time.localtime().tm_wday] + " 입니다." + str(time.localtime().tm_sec) }}],
+                        time.localtime().tm_wday] + " 입니다."}}],
                      "quickReplies": [{"label": "오늘", "action": "message", "messageText": "오늘"},
                                       {"label": "월요일", "action": "message", "messageText": "월요일"},
                                       {"label": "화요일", "action": "message", "messageText": "화요일"},
@@ -146,7 +148,7 @@ def bob():
     content = content['userRequest']
     content = content['utterance']
 
-    global ChoiceUrl,ChoiceRes,ChoiceRes,jsonChoiceday,jsonChoiceRes
+    global ChoiceUrl,ChoiceRes,Choiceweek,jsonChoiceday,jsonChoiceRes
 
     if content==u"학생식당":
         response_data = returnjsonChoiceday()
