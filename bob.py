@@ -31,20 +31,6 @@ urlBunsic="http://www.kumoh.ac.kr/ko/restaurant04.do"
 @@@ 예외적으로 오름 1동은 중식->조식 @@@
 '''
 
-jsonChoiceday = {
-    "version": "2.0",
-    "template": {"outputs": [{"simpleText": {"text": "요일을 선택해 주세요.\n\n오늘은 "+str(time.localtime().tm_year)+"년 "+str(time.localtime().tm_mon)+"월 "+str(time.localtime().tm_mday)+"일 "+week[time.localtime().tm_wday]+" 입니다."}}],
-                 "quickReplies": [{"label": "오늘", "action": "message", "messageText": "오늘"},
-                                  {"label": "월요일", "action": "message", "messageText": "월요일"},
-                                  {"label": "화요일", "action": "message", "messageText": "화요일"},
-                                  {"label": "수요일", "action": "message", "messageText": "수요일"},
-                                  {"label": "목요일", "action": "message", "messageText": "목요일"},
-                                  {"label": "금요일", "action": "message", "messageText": "금요일"},
-                                  {"label": "토요일", "action": "message", "messageText": "토요일"},
-                                  {"label": "일요일", "action": "message", "messageText": "일요일"}
-                                  ]
-                 }
-}
 
 jsonChoiceRes = {
     "version": "2.0",
@@ -131,6 +117,28 @@ def returnMenujson(url,num):  #식당 메뉴를 json으로 리턴하는 함수
 
     return temp
 
+def returnjsonChoiceday():
+
+    temp = {
+        "version": "2.0",
+        "template": {"outputs": [{"simpleText": {
+            "text": "요일을 선택해 주세요.\n\n오늘은 " + str(time.localtime().tm_year) + "년 " + str(
+                time.localtime().tm_mon) + "월 " + str(time.localtime().tm_mday) + "일 " + week[
+                        time.localtime().tm_wday] + " 입니다." + str(time.localtime().tm_sec) }}],
+                     "quickReplies": [{"label": "오늘", "action": "message", "messageText": "오늘"},
+                                      {"label": "월요일", "action": "message", "messageText": "월요일"},
+                                      {"label": "화요일", "action": "message", "messageText": "화요일"},
+                                      {"label": "수요일", "action": "message", "messageText": "수요일"},
+                                      {"label": "목요일", "action": "message", "messageText": "목요일"},
+                                      {"label": "금요일", "action": "message", "messageText": "금요일"},
+                                      {"label": "토요일", "action": "message", "messageText": "토요일"},
+                                      {"label": "일요일", "action": "message", "messageText": "일요일"}
+                                      ]
+                     }
+    }
+
+    return temp
+
 @app.route('/message', methods=['POST'])  #json으로 들어온 사용자 요청을 보고 판단
 def bob():
 
@@ -141,32 +149,32 @@ def bob():
     global ChoiceUrl,ChoiceRes,ChoiceRes,jsonChoiceday,jsonChoiceRes
 
     if content==u"학생식당":
-        response_data=jsonChoiceday
+        response_data = returnjsonChoiceday()
         ChoiceUrl=urlStudent
         ChoiceRes=0
 
     elif content==u"푸름관":
-        response_data=jsonChoiceday
+        response_data = returnjsonChoiceday()
         ChoiceUrl=urlPorum
         ChoiceRes = 1
 
     elif content==u"오름1동":
-        response_data=jsonChoiceday
+        response_data = returnjsonChoiceday()
         ChoiceUrl=urlorum1
         ChoiceRes = 2
 
     elif content == u"오름3동":
-        response_data=jsonChoiceday
+        response_data = returnjsonChoiceday()
         ChoiceUrl=urlorum3
         ChoiceRes = 3
 
     elif content==u"교직원":
-        response_data=jsonChoiceday
+        response_data = returnjsonChoiceday()
         ChoiceUrl=urlProfess
         ChoiceRes = 4
 
     elif content==u"분식당":
-        response_data=jsonChoiceday
+        response_data = returnjsonChoiceday()
         ChoiceUrl=urlBunsic
         ChoiceRes = 5
 
