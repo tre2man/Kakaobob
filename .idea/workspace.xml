@@ -13,8 +13,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bob.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="523">
-              <caret line="233" lean-forward="true" selection-start-line="233" selection-end-line="233" />
+            <state relative-caret-position="451">
+              <caret line="154" column="34" lean-forward="true" selection-start-line="154" selection-start-column="34" selection-end-line="154" selection-end-column="34" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -49,6 +49,7 @@
       <find>ChoiceRes</find>
       <find>Choiceweek</find>
       <find>Choiceday</find>
+      <find>user</find>
     </findStrings>
     <replaceStrings>
       <replace>jsonChoiceda</replace>
@@ -116,7 +117,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="RunManager" selected="Python.bob">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="kakaobob" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -378,8 +379,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test" />
         <item itemvalue="Python.bob" />
+        <item itemvalue="Python.test" />
         <item itemvalue="Python.jy" />
         <item itemvalue="Python.bob2" />
         <item itemvalue="Python.i2bob" />
@@ -408,7 +409,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.2224554" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2224554" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39874083" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -499,8 +500,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bob.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
-          <caret line="233" lean-forward="true" selection-start-line="233" selection-end-line="233" />
+        <state relative-caret-position="451">
+          <caret line="154" column="34" lean-forward="true" selection-start-line="154" selection-start-column="34" selection-end-line="154" selection-end-column="34" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
