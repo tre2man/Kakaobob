@@ -152,7 +152,9 @@ def bob():
 
     content = request.get_json() #사용자가 보낸 메세지 입력
     content = content['userRequest']
+    user = content['id']
     content = content['utterance']
+
 
     global ChoiceUrl,ChoiceRes,Choiceweek,jsonChoiceday,jsonChoiceRes
 
@@ -236,6 +238,7 @@ def bob():
     else :
         response_data = jsonChoiceRes
 
+    print(user)
     return jsonify(response_data)
 
 if __name__=="__main__":
