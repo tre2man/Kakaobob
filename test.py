@@ -3,6 +3,7 @@ import time
 import bs4
 import urllib.request
 import api
+import datetime
 
 import os
 import sys
@@ -128,7 +129,11 @@ gumidust="https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&mra=bl
 gumiweather="http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=4719025300"
 
 
-urlOpendata = api.urlOpendata
+urlBustop = api.urlBustop
+urlBusEnd = api.urlBusEnd
+
+def secToMin(sec):
+    return datetime.timedelta(seconds=sec)
 
 def returnBus(url):
 
@@ -143,9 +148,9 @@ def returnBus(url):
     routeno = body.findAll('routeno') #버스번호
 
     for i in range(totalCount):
-        print(str(routeno[i].text)+" "+str(routeid[i].text)+" "+str(arrtime[i].text))
+        print(str(routeno[i].text)+" "+str(routeid[i].text)+" "+str(secToMin(int(arrtime[i].text)))[2:])
 
 
-print(returnBus(urlOpendata))
+print(returnBus(urlBustop))
 
 
