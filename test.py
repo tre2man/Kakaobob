@@ -2,6 +2,7 @@ from flask import Flask,request,jsonify
 import time
 import bs4
 import urllib.request
+import api
 
 import os
 import sys
@@ -108,10 +109,43 @@ def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (식당종류
         else:
             return "등록된 메뉴가 없습니다."
 
+def testurl(url,num):  #구미시 미세먼지 정도 반환
+
+    html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
+    dusts = html.findAll("span",{"class":"value"})
+    dust = dusts[4].text
+    intdust=int(dust)
+
+    return intdust
+
 
 ChoiceDay=0
 ChoiceRes=4
 
 Restaurant=["학생식당","푸름관","오름1동","오름3동","교직원 식당","분식당"]
 
-print(returnMenu(urlProfess,ChoiceDay))
+gumidust="https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&mra=blQ3&query=%EA%B2%BD%EB%B6%81%20%EB%AF%B8%EC%84%B8%EB%A8%BC%EC%A7%80"
+gumiweather="http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=4719025300"
+
+
+urlOpendata = api.urlOpendata
+
+def returnBus(url):
+
+    html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
+    body = html.find('body')
+
+    totalCount = body.find('totalcount')
+    totalCount = int(totalCount.text)
+
+    arrtime = body.findAll('arrtime') #남은시간(초)
+    routeid = body.findAll('routeid') #노선번호
+    routeno = body.findAll('routeno') #버스번호
+
+    for i in range(totalCount):
+        print(str(arrtime[i].text)+" "+str(routeid[i].text)+" "+str(routeno[i].text))
+
+
+print(returnBus(urlOpendata))
+
+
