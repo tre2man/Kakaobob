@@ -110,14 +110,21 @@ def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (식당종류
         else:
             return "등록된 메뉴가 없습니다."
 
-def testurl(url,num):  #구미시 미세먼지 정도 반환
+def returnDust(url):  #구미시 미세먼지 정도 반환
 
     html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
     dusts = html.findAll("span",{"class":"value"})
-    dust = dusts[4].text
+    dust = dusts[4].text #구미시 미세먼지는 네번째
     intdust=int(dust)
 
-    return intdust
+    if(intdust<=30):
+        return str(intdust)+" 좋음"
+    elif (intdust <= 80):
+        return str(intdust) + " 보통"
+    elif (intdust <= 150):
+        return str(intdust) + " 나쁨"
+    else :
+        return str(intdust) + " 매우나쁨"
 
 
 ChoiceDay=0
@@ -152,5 +159,6 @@ def returnBus(url):
 
 
 print(returnBus(urlBustop))
+print(returnDust(gumidust))
 
 
