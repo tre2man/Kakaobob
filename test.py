@@ -143,7 +143,7 @@ def returnBus(url):
     routeno = body.findAll('routeno') #버스번호
 
     for i in range(totalCount):
-        print(str(arrtime[i].text)+" "+str(routeid[i].text)+" "+str(routeno[i].text))
+        print(str(routeno[i].text)+" "+str(routeid[i].text)+" "+str(arrtime[i].text))
 
 
 print(returnBus(urlOpendata))
