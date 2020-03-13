@@ -126,15 +126,76 @@ def returnDust(url):  #구미시 미세먼지 정도 반환
     else :
         return str(intdust) + " 매우나쁨"
 
+def returnWeather(url):  #구미시 날씨 반환
+
+    html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
+    dataToday = html.find("data",{"seq":"0"})
+    temperatureToday = dataToday.find('temp').text  #온도
+    skyToday = dataToday.find('wfkor').text  #날씨
+    humidToday = dataToday.find('pop').text  #습도
+    windToday = dataToday.find('wd').text  #풍속
+    Today = "온도 : " + temperatureToday + "날씨 : " + skyToday +"\n습도 : " + humidToday + "%\n풍속 : " + windToday
+
+    dataTomorrow = html.find("data",{"seq":"8"})
+    temperatureTom = dataTomorrow.find('temp').text  # 온도
+    skyTom = dataTomorrow.find('wfkor').text  # 날씨
+    humidTom = dataTomorrow.find('pop').text  # 습도
+    windTom = dataTomorrow.find('wd').text  # 풍속
+    Tomorrow = "온도 : " + temperatureTom + "날씨 : " + skyTom + "\n습도 : " + humidTom + "%\n풍속 : " + windTom
+
+    data2Tomorrow = html.find("data", {"seq": "16"})
+    temperature2Tom = data2Tomorrow.find('temp').text  # 온도
+    sky2Tom = data2Tomorrow.find('wfkor').text  # 날씨
+    humid2Tom = data2Tomorrow.find('pop').text  # 습도
+    wind2Tom = data2Tomorrow.find('wd').text  # 풍속
+    Tomorrows = "온도 : " + temperature2Tom + "날씨 : " + sky2Tom + "\n습도 : " + humid2Tom + "%\n풍속 : " + wind2Tom
+
+    return [Today,Tomorrow,Tomorrows]
+
+
+def returnWeatherjson(urlWeatehr,urlDust):
+
+    temp = {
+              "version": "2.0",
+              "template": {
+                "outputs": [
+                  {
+                    "carousel": {
+                      "type": "basicCard",
+                      "items": [
+                        {
+                          "title": "오늘 날씨",
+                          "description": returnWeather(urlWeatehr)[0] + "\n미세먼지 : " + returnDust(urlDust),
+                        },
+                        {
+                          "title": "내일 날씨",
+                          "description": returnWeather(urlWeatehr)[1],
+                        },
+                        {
+                          "title": "모레 날씨",
+                          "description": returnWeather(urlWeatehr)[2]
+                        }
+                      ]
+                    }
+                  }
+              ],
+                  "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"}]
+            }
+    }
+
+    return temp
+
+
+
 
 ChoiceDay=0
 ChoiceRes=4
+emo="🌞⛅☔⚡⛄"
 
 Restaurant=["학생식당","푸름관","오름1동","오름3동","교직원 식당","분식당"]
 
-gumidust="https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&mra=blQ3&query=%EA%B2%BD%EB%B6%81%20%EB%AF%B8%EC%84%B8%EB%A8%BC%EC%A7%80"
-gumiweather="http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=4719025300"
-
+urlGumidust="https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&mra=blQ3&query=%EA%B2%BD%EB%B6%81%20%EB%AF%B8%EC%84%B8%EB%A8%BC%EC%A7%80"
+urlGumiweather="http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=4719069000"
 
 urlBustop = api.urlBustop
 urlBusEnd = api.urlBusEnd
@@ -158,7 +219,8 @@ def returnBus(url):
         print(str(routeno[i].text)+" "+str(routeid[i].text)+" "+str(secToMin(int(arrtime[i].text)))[2:])
 
 
-print(returnBus(urlBustop))
-print(returnDust(gumidust))
+#print(returnBus(urlBustop))
+#print(returnDust(gumidust))
+print(str(returnWeatherjson(urlGumiweather,urlGumidust)))
 
 
