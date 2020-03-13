@@ -2,6 +2,7 @@ from flask import Flask,request,jsonify
 import time
 import bs4
 import urllib.request
+import threading
 
 import os
 import sys
@@ -184,21 +185,21 @@ def returnWeather(url):  #구미시 날씨 반환
     skyToday = dataToday.find('wfkor').text  #날씨
     humidToday = dataToday.find('pop').text  #습도
     windToday = dataToday.find('wd').text  #풍속
-    Today = "온도 : " + temperatureToday + "날씨 : " + skyToday +"\n습도 : " + humidToday + "%\n풍속 : " + windToday
+    Today = "온도 : " + temperatureToday + "\n날씨 : " + skyToday +"\n습도 : " + humidToday + "%\n풍속 : " + windToday
 
     dataTomorrow = html.find("data",{"seq":"8"})
     temperatureTom = dataTomorrow.find('temp').text  # 온도
     skyTom = dataTomorrow.find('wfkor').text  # 날씨
     humidTom = dataTomorrow.find('pop').text  # 습도
     windTom = dataTomorrow.find('wd').text  # 풍속
-    Tomorrow = "온도 : " + temperatureTom + "날씨 : " + skyTom + "\n습도 : " + humidTom + "%\n풍속 : " + windTom
+    Tomorrow = "온도 : " + temperatureTom + "\n날씨 : " + skyTom + "\n습도 : " + humidTom + "%\n풍속 : " + windTom
 
     data2Tomorrow = html.find("data", {"seq": "16"})
     temperature2Tom = data2Tomorrow.find('temp').text  # 온도
     sky2Tom = data2Tomorrow.find('wfkor').text  # 날씨
     humid2Tom = data2Tomorrow.find('pop').text  # 습도
     wind2Tom = data2Tomorrow.find('wd').text  # 풍속
-    Tomorrows = "온도 : " + temperature2Tom + "날씨 : " + sky2Tom + "\n습도 : " + humid2Tom + "%\n풍속 : " + wind2Tom
+    Tomorrows = "온도 : " + temperature2Tom + "\n날씨 : " + sky2Tom + "\n습도 : " + humid2Tom + "%\n풍속 : " + wind2Tom
 
     return [Today,Tomorrow,Tomorrows]
 
@@ -326,7 +327,7 @@ def bob():
     elif content == u"교직원 시간":
         response_data = returnAvaliableTime(ProfessTime)
 
-    elif content == u"날씨":
+    elif content == u"날씨 정보":
         response_data = returnWeatherjson(urlGumiweather,urlGumidust)
 
     else :
