@@ -24,6 +24,7 @@ urlPorum="http://dorm.kumoh.ac.kr/dorm/restaurant_menu01.do"
 urlorum1="http://dorm.kumoh.ac.kr/dorm/restaurant_menu02.do"
 urlorum3="http://dorm.kumoh.ac.kr/dorm/restaurant_menu03.do"
 urlBunsic="http://www.kumoh.ac.kr/ko/restaurant04.do"
+
 urlGumidust="https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&mra=blQ3&query=%EA%B2%BD%EB%B6%81%20%EB%AF%B8%EC%84%B8%EB%A8%BC%EC%A7%80"
 urlGumiweather="http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=4719069000"
 
@@ -125,7 +126,7 @@ def returnAvaliableTime(index):  #식당 이용 가능 시간을 json으로 리�
 
 def returnMenujson(url,num):  #식당 메뉴를 json으로 리턴하는 함수
 
-    temp={
+    temp = {
         "version": "2.0",
         "template": {"outputs": [{"simpleText": {"text": returnMenu(url,num)}}],
                      "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"},
@@ -163,7 +164,7 @@ def returnDust(url):  #구미시 미세먼지 정도 반환
 
     html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
     dusts = html.findAll("span",{"class":"value"})
-    dust = dusts[4].text #구미시 미세먼지는 네번째
+    dust = dusts[4].text #구미시 미세먼지는 다섯번째
     intdust=int(dust)
 
     if(intdust<=30):

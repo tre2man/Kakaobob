@@ -1,3 +1,5 @@
+###TEST CODE###
+
 from flask import Flask,request,jsonify
 import time
 import bs4
@@ -207,6 +209,7 @@ def returnBus(url):
 
     html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
     body = html.find('body')
+    print(type(body))
 
     totalCount = body.find('totalcount')
     totalCount = int(totalCount.text)
@@ -221,6 +224,6 @@ def returnBus(url):
 
 #print(returnBus(urlBustop))
 #print(returnDust(gumidust))
-print(str(returnWeatherjson(urlGumiweather,urlGumidust)))
+print(returnBus(urlBustop))
 
 
