@@ -6,9 +6,11 @@ import bs4
 import urllib.request
 import api
 import datetime
+import schedule
 
 import os
 import sys
+
 
 app = Flask(__name__)
 
@@ -27,7 +29,8 @@ urlorum1="http://dorm.kumoh.ac.kr/dorm/restaurant_menu02.do"
 urlorum3="http://dorm.kumoh.ac.kr/dorm/restaurant_menu03.do"
 urlBunsic="http://www.kumoh.ac.kr/ko/restaurant04.do"
 
-urlArr=[urlStudent,urlPorum,urlorum1,urlorum3,urlBunsic,urlProfess]
+urlArr=[urlStudent,urlPorum,urlorum1,urlorum3,urlProfess,urlBunsic]
+saveMenu = []  # 6개의 식당, 7개의 요일
 
 '''
 월요일~일요일 중식 : 0~6
@@ -79,6 +82,7 @@ ProfessTime="중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30"
 DomitoryTime="학기중\n\n조식 시간\n- 평일 : 07:30 ~ 09:30\n- 주말 : 08:00 ~ 09:30\n중식 시간\n- 평일 : 11:30 ~ 13:30\n- 주말 : 12:00 ~ 13:30\n석식 시간\n- 평일 : 17:00 ~ 19:00\n- 주말 : 17:00 ~ 18:30\n\n방학중\n\n조식 시간- 08:00 ~ 09:30\n중식 시간- 12:00 ~ 13:30\n석식 시간- 17:00 ~ 18:30"
 
 
+
 def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (식당종류,날짜)
 
     global ChoiceRes
@@ -87,8 +91,8 @@ def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (식당종류
     menus=html.find("td")
     menu=str(menus.text)  #bs4 자료형을 String 형태로 변환, 식단의 존재 유무 판별
 
-    if(menu=="등록된 메뉴가 없습니다."): #식단이 없을경우(기숙사 식당 주로)
-        return menu
+    if menu=="등록된 메뉴가 없습니다." : #식단이 없을경우(기숙사 식당 주로)
+        return "등록된 메뉴가 없습니다. 😥"
 
     else:                              #식단이 있을경우
         menu = html.findAll("ul", {"class": "s-dot"})
@@ -100,17 +104,18 @@ def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (식당종류
         if menuEnd != "" :
             if ChoiceRes==2: #오름1동, 중식->조식
                 menuEnd2 = str(menu[num + 7].text.rstrip("\n"))
-                return "선택한 날짜 : "+day+"\n"+"아침메뉴\n"+menuEnd.lstrip()+"\n\n저녁메뉴\n\n"+menuEnd2.lstrip()
+                return "선택한 날짜 : "+day+"\n"+"아침메뉴\n\n"+menuEnd.lstrip()+"\n\n저녁메뉴\n\n"+menuEnd2.lstrip()
 
             elif ChoiceRes==5: #분식당, 1일 1메뉴
                 return "선택한 날짜 : "+day+"\n"+menuEnd.lstrip()
 
             else:  #점심과 저녁
                 menuEnd2 = str(menu[num + 7].text.rstrip("\n"))
-                return "선택한 날짜 : "+day+"\n"+"점심메뉴\n"+menuEnd.lstrip()+"\n\n저녁메뉴\n\n"+menuEnd2.lstrip()
+                return "선택한 날짜 : "+day+"\n"+"점심메뉴\n\n"+menuEnd.lstrip()+"\n\n저녁메뉴\n\n"+menuEnd2.lstrip()
 
         else:
-            return "등록된 메뉴가 없습니다."
+            return "등록된 메뉴가 없습니다. 😥"
+
 
 def returnDust(url):  #구미시 미세먼지 정도 반환
 
@@ -222,8 +227,29 @@ def returnBus(url):
         print(str(routeno[i].text)+" "+str(routeid[i].text)+" "+str(secToMin(int(arrtime[i].text)))[2:])
 
 
+
+def saveMenuArr():
+
+    a = -1
+    global ChoiceRes
+    global saveMenu
+    ChoiceRes = 0
+
+    for i in urlArr:   #식당 루프
+        day=["","","","","","",""]
+        a += 1
+        for j in range (7) :  #번호 루프
+            print(i,j)
+            day[j] = returnMenu(i,j)
+        saveMenu.append(day)
+        ChoiceRes += 1
+
+    print(saveMenu)
+
+saveMenuArr()
+
 #print(returnBus(urlBustop))
 #print(returnDust(gumidust))
-print(returnBus(urlBustop))
+#print(returnBus(urlBustop))
 
 

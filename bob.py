@@ -28,10 +28,18 @@ urlBunsic="http://www.kumoh.ac.kr/ko/restaurant04.do"
 urlGumidust="https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&mra=blQ3&query=%EA%B2%BD%EB%B6%81%20%EB%AF%B8%EC%84%B8%EB%A8%BC%EC%A7%80"
 urlGumiweather="http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=4719069000"
 
+
+StudentTime=str("조식시간 : 08:30 ~ 09:30\n중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30\n토 : 10:00~14:00\n일,공휴일 : 휴무")
+
+ProfessTime=str("중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30")
+
+DomitoryTime=str("학기중\n\n조식 시간\n- 평일 : 07:30 ~ 09:30\n- 주말 : 08:00 ~ 09:30\n중식 시간\n- 평일 : 11:30 ~ 13:30"
+                 "\n- 주말 : 12:00 ~ 13:30\n석식 시간\n- 평일 : 17:00 ~ 19:00\n- 주말 : 17:00 ~ 18:30\n\n방학중\n\n"
+                 "조식 시간- 08:00 ~ 09:30\n중식 시간- 12:00 ~ 13:30\n석식 시간- 17:00 ~ 18:30")
+
 '''
 월요일~일요일 중식 : 0~6
 월요일~일요일 석식 : 7~13
-
 @@@ 예외적으로 오름 1동은 중식->조식 @@@
 '''
 
@@ -68,13 +76,10 @@ jsonChoiceAvailableTime = {
                  }
 }
 
-StudentTime=str("조식시간 : 08:30 ~ 09:30\n중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30\n토 : 10:00~14:00\n일,공휴일 : 휴무")
 
-ProfessTime=str("중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30")
+#변수 선언 완료
+#함수 선언 시작
 
-DomitoryTime=str("학기중\n\n조식 시간\n- 평일 : 07:30 ~ 09:30\n- 주말 : 08:00 ~ 09:30\n중식 시간\n- 평일 : 11:30 ~ 13:30"
-                 "\n- 주말 : 12:00 ~ 13:30\n석식 시간\n- 평일 : 17:00 ~ 19:00\n- 주말 : 17:00 ~ 18:30\n\n방학중\n\n"
-                 "조식 시간- 08:00 ~ 09:30\n중식 시간- 12:00 ~ 13:30\n석식 시간- 17:00 ~ 18:30")
 
 def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (식당종류,날짜)
 
@@ -110,6 +115,19 @@ def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (식당종류
             return "등록된 메뉴가 없습니다. 😥"
 
 
+def returnMenujson(url,num):  #식당 메뉴를 json으로 리턴하는 함수
+
+    temp = {
+        "version": "2.0",
+        "template": {"outputs": [{"simpleText": {"text": returnMenu(url,num)}}],
+                     "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"},
+                                      ]
+                     }
+        }
+
+    return temp
+
+
 def returnAvaliableTime(index):  #식당 이용 가능 시간을 json으로 리턴하는 함수
 
     temp={
@@ -124,20 +142,7 @@ def returnAvaliableTime(index):  #식당 이용 가능 시간을 json으로 리�
     return temp
 
 
-def returnMenujson(url,num):  #식당 메뉴를 json으로 리턴하는 함수
-
-    temp = {
-        "version": "2.0",
-        "template": {"outputs": [{"simpleText": {"text": returnMenu(url,num)}}],
-                     "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"},
-                                      ]
-                     }
-        }
-
-    return temp
-
-
-def returnjsonChoiceday():
+def returnjsonChoiceday():  #날짜 선택지를 json으로 리턴하는 함수
 
     temp = {
         "version": "2.0",
@@ -160,7 +165,7 @@ def returnjsonChoiceday():
     return temp
 
 
-def returnDust(url):  #구미시 미세먼지 정도 반환
+def returnDust(url):  #구미시 미세먼지 정도 반환하는 함수
 
     html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
     dusts = html.findAll("span",{"class":"value"})
@@ -177,7 +182,7 @@ def returnDust(url):  #구미시 미세먼지 정도 반환
         return str(intdust) + " 매우나쁨"
 
 
-def returnWeather(url):  #구미시 날씨 반환
+def returnWeather(url):  #구미시 날씨 반환하는 함수
 
     html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
 
@@ -205,7 +210,7 @@ def returnWeather(url):  #구미시 날씨 반환
     return [Today,Tomorrow,Tomorrows]
 
 
-def returnWeatherjson(urlWeatehr,urlDust):
+def returnWeatherjson(urlWeatehr,urlDust): #구미시의 종합 날씨를 json으로 리턴하는 함수
 
     temp = {
               "version": "2.0",
@@ -244,7 +249,6 @@ def bob():
     content = request.get_json() #사용자가 보낸 메세지 입력
     content = content['userRequest']
     content = content['utterance']
-
 
     global ChoiceUrl,ChoiceRes,Choiceweek,jsonChoiceday,jsonChoiceRes
 
