@@ -4,7 +4,7 @@ from flask import Flask,request,jsonify
 import time
 import bs4
 import urllib.request
-import api
+import key
 import datetime
 import schedule
 
@@ -204,8 +204,8 @@ Restaurant=["학생식당","푸름관","오름1동","오름3동","교직원 식�
 urlGumidust="https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&mra=blQ3&query=%EA%B2%BD%EB%B6%81%20%EB%AF%B8%EC%84%B8%EB%A8%BC%EC%A7%80"
 urlGumiweather="http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=4719069000"
 
-urlBustop = api.urlBustop
-urlBusEnd = api.urlBusEnd
+urlBustop = key.urlBustop
+urlBusEnd = key.urlBusEnd
 
 def secToMin(sec):
     return datetime.timedelta(seconds=sec)
