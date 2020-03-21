@@ -18,13 +18,6 @@ ChoiceUrl=""
 ChoiceWeek=0
 ChoiceRes=0
 
-urlStudent="http://www.kumoh.ac.kr/ko/restaurant01.do"
-urlProfess="http://www.kumoh.ac.kr/ko/restaurant02.do"
-urlPorum="http://dorm.kumoh.ac.kr/dorm/restaurant_menu01.do"
-urlorum1="http://dorm.kumoh.ac.kr/dorm/restaurant_menu02.do"
-urlorum3="http://dorm.kumoh.ac.kr/dorm/restaurant_menu03.do"
-urlBunsic="http://www.kumoh.ac.kr/ko/restaurant04.do"
-
 urlGumidust="https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&mra=blQ3&query=%EA%B2%BD%EB%B6%81%20%EB%AF%B8%EC%84%B8%EB%A8%BC%EC%A7%80"
 urlGumiweather="http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=4719069000"
 
@@ -77,43 +70,9 @@ jsonChoiceAvailableTime = {
 }
 
 
-#변수 선언 완료
-#함수 선언 시작
+###변수 선언 완료
+###함수 선언 시작
 
-'''
-def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (식당종류,날짜)
-
-    global ChoiceRes
-
-    html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
-    menus=html.find("td")
-    menu=str(menus.text)  #bs4 자료형을 String 형태로 변환, 식단의 존재 유무 판별
-
-    if(menu=="등록된 메뉴가 없습니다."): #식단이 없을경우(기숙사 식당 주로)
-        return "등록된 메뉴가 없습니다. 😥"
-
-    else:                              #식단이 있을경우
-        menu = html.findAll("ul", {"class": "s-dot"})
-        menuEnd = str(menu[num].text.rstrip("\n"))
-
-        days=html.findAll("th",{"scope":{"col"}})
-        day=str(days[num].text.lstrip())
-
-        if menuEnd != "" :
-            if ChoiceRes==2: #오름1동, 중식->조식
-                menuEnd2 = str(menu[num + 7].text.rstrip("\n"))
-                return "선택한 날짜 : "+day+"\n"+"아침메뉴\n\n"+menuEnd.lstrip()+"\n\n저녁메뉴\n\n"+menuEnd2.lstrip()
-
-            elif ChoiceRes==5: #분식당, 1일 1메뉴
-                return "선택한 날짜 : "+day+"\n"+menuEnd.lstrip()
-
-            else:  #점심과 저녁
-                menuEnd2 = str(menu[num + 7].text.rstrip("\n"))
-                return "선택한 날짜 : "+day+"\n"+"점심메뉴\n\n"+menuEnd.lstrip()+"\n\n저녁메뉴\n\n"+menuEnd2.lstrip()
-
-        else:
-            return "등록된 메뉴가 없습니다. 😥"
-'''
 
 def returnMenujson(res,week):  #식당 메뉴를 json으로 리턴하는 함수
 
@@ -262,32 +221,26 @@ def bob():
 
     if content==u"학생식당":
         response_data = returnjsonChoiceday()
-        ChoiceUrl=urlStudent
         ChoiceRes = 0
 
     elif content==u"푸름관":
         response_data = returnjsonChoiceday()
-        ChoiceUrl=urlPorum
         ChoiceRes = 1
 
     elif content==u"오름1동":
         response_data = returnjsonChoiceday()
-        ChoiceUrl=urlorum1
         ChoiceRes = 2
 
     elif content == u"오름3동":
         response_data = returnjsonChoiceday()
-        ChoiceUrl=urlorum3
         ChoiceRes = 3
 
     elif content==u"교직원":
         response_data = returnjsonChoiceday()
-        ChoiceUrl=urlProfess
         ChoiceRes = 4
 
     elif content==u"분식당":
         response_data = returnjsonChoiceday()
-        ChoiceUrl=urlBunsic
         ChoiceRes = 5
 
     elif content==u"오늘":

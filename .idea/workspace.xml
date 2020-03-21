@@ -13,8 +13,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bob.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="294" column="55" lean-forward="true" selection-start-line="294" selection-start-column="55" selection-end-line="294" selection-end-column="55" />
+            <state relative-caret-position="180">
+              <caret line="117" column="78" lean-forward="true" selection-start-line="117" selection-start-column="78" selection-end-line="117" selection-end-column="78" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -25,11 +25,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bobparser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="92" selection-start-line="92" selection-end-line="92" />
+            <state relative-caret-position="499">
+              <caret line="59" column="45" selection-start-line="59" selection-start-column="45" selection-end-line="59" selection-end-column="45" />
               <folding>
-                <element signature="e#17#28#0" expanded="true" />
+                <element signature="e#0#11#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/key.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="160">
+              <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -37,8 +46,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="248" column="13" lean-forward="true" selection-start-line="248" selection-start-column="13" selection-end-line="248" selection-end-column="13" />
+            <state relative-caret-position="4780">
+              <caret line="248" column="13" selection-start-line="248" selection-start-column="13" selection-end-line="248" selection-end-column="13" />
               <folding>
                 <element signature="e#17#56#0" expanded="true" />
               </folding>
@@ -51,15 +60,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="160">
               <caret line="8" column="5" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/key.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -119,7 +119,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -127,10 +126,16 @@
               <item name="kakaobob" type="b2602c69:ProjectViewProjectNode" />
               <item name="kakaobob" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="kakaobob" type="b2602c69:ProjectViewProjectNode" />
+              <item name="kakaobob" type="462c0819:PsiDirectoryNode" />
+              <item name="files" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="ProjectViewState">
@@ -433,8 +438,8 @@
       <item itemvalue="Python.test" />
       <item itemvalue="Python.bob2" />
       <item itemvalue="Python.bob" />
-      <item itemvalue="Python.jy" />
       <item itemvalue="Python.bobparser" />
+      <item itemvalue="Python.jy" />
       <item itemvalue="Python.test2" />
     </list>
     <recent_temporary>
@@ -555,23 +560,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../openkakaobob/api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="3" column="46" selection-start-line="3" selection-start-column="46" selection-end-line="3" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/module.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="2" column="21" lean-forward="true" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../openkakaobob/api.py" />
+    <entry file="file://$PROJECT_DIR$/module.py" />
     <entry file="file://$USER_HOME$/.PyCharmCE2019.1/system/python_stubs/-1340445502/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="194">
@@ -579,29 +569,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/output.csv">
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-      <provider selected="true" editor-type-id="csv-text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data.csv">
-      <provider editor-type-id="csv-table-editor">
-        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
-      </provider>
-      <provider selected="true" editor-type-id="csv-text-editor">
-        <state relative-caret-position="-840">
-          <caret column="1" selection-start-column="1" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/img.jpg" />
+    <entry file="file://$PROJECT_DIR$/output.csv" />
+    <entry file="file://$PROJECT_DIR$/data.csv" />
     <entry file="file://$PROJECT_DIR$/key.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
           <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4780">
+          <caret line="248" column="13" selection-start-line="248" selection-start-column="13" selection-end-line="248" selection-end-column="13" />
+          <folding>
+            <element signature="e#17#56#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -612,20 +596,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="248" column="13" lean-forward="true" selection-start-line="248" selection-start-column="13" selection-end-line="248" selection-end-column="13" />
-          <folding>
-            <element signature="e#17#56#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bob.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="294" column="55" lean-forward="true" selection-start-line="294" selection-start-column="55" selection-end-line="294" selection-end-column="55" />
+        <state relative-caret-position="180">
+          <caret line="117" column="78" lean-forward="true" selection-start-line="117" selection-start-column="78" selection-end-line="117" selection-end-column="78" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -634,10 +608,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bobparser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="92" selection-start-line="92" selection-end-line="92" />
+        <state relative-caret-position="499">
+          <caret line="59" column="45" selection-start-line="59" selection-start-column="45" selection-end-line="59" selection-end-column="45" />
           <folding>
-            <element signature="e#17#28#0" expanded="true" />
+            <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
