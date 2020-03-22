@@ -122,13 +122,13 @@ def saveWeather(): #날씨 크롤링하는 함수
     weatherxl.cell(1, 2, today_min_temp.text)
     weatherxl.cell(1, 3, today_max_temp.text)
 
-    #today_dust_box = weatherbox.find("dl",{"class":"indicator"})
-    today_dusts = weatherbox.findAll("dd",{"class":"lv2"})
-    today_parti_matter = weatherbox.find("dd",{"class":"lv1"})
+    today_dust_box = weatherbox.find("dl",{"class":"indicator"})
+    today_dusts = today_dust_box.findAll("dd")
     today_dust = today_dusts[0]
-    today_ozon = today_dusts[1]
-    weatherxl.cell(1, 4, today_parti_matter.text)
-    weatherxl.cell(1, 5, today_dust.text)
+    today_parti_matter = today_dusts[1]
+    today_ozon = today_dusts[2]
+    weatherxl.cell(1, 4, today_dust.text)
+    weatherxl.cell(1, 5, today_parti_matter.text)
     weatherxl.cell(1, 6, today_ozon.text)
 
     weather_predicts = weatherbox.findAll("li",{"class":{"date_info today"}})
@@ -197,11 +197,12 @@ def returnWeatherjson(urlWeather,urlDust):  #날씨 반환하는 함수
     return temp
 
 
-saveMenuArr()  #프로그램 최초 실행 시 메뉴 리프레시(저장)
-#saveWeather()
+#saveMenuArr()  #프로그램 최초 실행 시 메뉴 리프레시(저장)
+saveWeather()
 
-schedule.every().monday.at("00:01").do(saveMenuArr)   #월요일 00:01 마다 크롤링
+schedule.every().monday.at("00:01").do(saveMenuArr)   #월요일 00:01 마다 크롤링,밑에도 알아서
 schedule.every().monday.at("05:30").do(saveMenuArr)
+schedule.every().wednesday.at("02:00").do(saveMenuArr)
 schedule.every(15).minutes.do(saveWeather)
 
 while True:
