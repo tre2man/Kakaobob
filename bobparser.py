@@ -21,7 +21,6 @@ urlBunsic="http://www.kumoh.ac.kr/ko/restaurant04.do"
 urlNaverGumiWeather = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EA%B5%AC%EB%AF%B8%EC%8B%9C+%EC%96%91%ED%8F%AC%EB%8F%99+%EB%82%A0%EC%94%A8&oquery=%EA%B5%AC%EB%AF%B8%EC%8B%9C+%EB%82%A0%EC%94%A8&tqi=UFk1%2BwprvxZssC9GFFdssssstU4-254477"
 
 urlArr=[urlStudent,urlPorum,urlorum1,urlorum3,urlProfess,urlBunsic]
-saveMenu = []  # 6개의 식당, 7개의 요일
 
 
 ###변수 선언 완료
@@ -75,14 +74,15 @@ def saveMenuArr():  #금오공대 전체 메뉴를 저장하기 위한 함수
     f = xl.Workbook()
     menuxl = f.active
 
-    a = 0
+    global ChoiceRes
+    ChoiceRes = 0
 
     for i in urlArr:   #식당 루프
         b = 0
         for j in range (7) :  #번호 루프
-            menuxl.cell(a+1,b+1,returnMenu(i,j))  #해당하는 셀에 메뉴 정보를 저장
+            menuxl.cell(ChoiceRes+1,b+1,returnMenu(i,j))  #해당하는 셀에 메뉴 정보를 저장
             b += 1
-        a += 1
+        ChoiceRes += 1
 
     f.save('files/menu.xlsx')  #최종적으로 파일 저장
 
@@ -198,7 +198,7 @@ def returnWeatherjson(urlWeather,urlDust):  #날씨 반환하는 함수
 
 
 saveMenuArr()  #프로그램 최초 실행 시 메뉴 리프레시(저장)
-saveWeather()
+#saveWeather()
 
 schedule.every().monday.at("00:01").do(saveMenuArr)   #월요일 00:01 마다 크롤링
 schedule.every().monday.at("05:30").do(saveMenuArr)
