@@ -18,6 +18,8 @@ urlorum1="http://dorm.kumoh.ac.kr/dorm/restaurant_menu02.do"
 urlorum3="http://dorm.kumoh.ac.kr/dorm/restaurant_menu03.do"
 urlBunsic="http://www.kumoh.ac.kr/ko/restaurant04.do"
 
+urlNaverGumiWeather = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EA%B5%AC%EB%AF%B8%EC%8B%9C+%EC%96%91%ED%8F%AC%EB%8F%99+%EB%82%A0%EC%94%A8&oquery=%EA%B5%AC%EB%AF%B8%EC%8B%9C+%EB%82%A0%EC%94%A8&tqi=UFk1%2BwprvxZssC9GFFdssssstU4-254477"
+
 urlArr=[urlStudent,urlPorum,urlorum1,urlorum3,urlProfess,urlBunsic]
 saveMenu = []  # 6개의 식당, 7개의 요일
 
@@ -68,42 +70,139 @@ def saveMenuArr():  #금오공대 전체 메뉴를 저장하기 위한 함수
     day = str(time.localtime().tm_mday)
     min = str(time.localtime().tm_min)
     sec = str(time.localtime().tm_sec)
-    print(f"Save Start at {day} day, {min} min {sec} sec")
+    print(f"Menu Save Start at {day} day, {min} min {sec} sec")
 
     f = xl.Workbook()
-    file = f.active
+    menuxl = f.active
 
-    global ChoiceRes
-    global saveMenu
-    a = -1
-    ChoiceRes = 0
+    a = 0
 
     for i in urlArr:   #식당 루프
         b = 0
-        a += 1
         for j in range (7) :  #번호 루프
-            file.cell(a+1,b+1,returnMenu(i,j))  #해당하는 셀에 메뉴 정보를 저장
+            menuxl.cell(a+1,b+1,returnMenu(i,j))  #해당하는 셀에 메뉴 정보를 저장
             b += 1
-        ChoiceRes += 1
+        a += 1
 
-    f.save('files/data.xlsx')  #최종적으로 파일 저장
+    f.save('files/menu.xlsx')  #최종적으로 파일 저장
 
     min = str(time.localtime().tm_min)
     sec = str(time.localtime().tm_sec)
-    print(f"Save Finish at {day} day, {min} min {sec} sec")
+    print(f"Menu Save Finish at {day} day {min} min {sec} sec")
 
 
 def openMenu(a,b):  #해당 값의 셀 내용 반환하는 함수(x,y)
 
-    f = xl.load_workbook('files/data.xlsx',data_only=True)
+    f = xl.load_workbook('files/menu.xlsx',data_only=True)
     file = f['Sheet']
 
     return file.cell(a+1,b+1).value
 
 
+def saveWeather(): #날씨 크롤링하는 함수
+
+    url = urlNaverGumiWeather
+
+    day = str(time.localtime().tm_mday)
+    min = str(time.localtime().tm_min)
+    sec = str(time.localtime().tm_sec)
+    print(f"Weather Save Start at {day} day, {min} min {sec} sec")
+
+    f = xl.Workbook()
+    weatherxl = f.active
+
+    html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
+    weatherbox = html.find("div",{"class":"weather_area _mainArea"})
+
+    today_weather = weatherbox.find("div",{"class":"info_data"})
+    now_temp = today_weather.find("span",{"class":"todaytemp"})
+    today_min_temp = today_weather.find("span",{"class":"min"})
+    today_max_temp = today_weather.find("span",{"class":"max"})
+    weatherxl.cell(1, 1, now_temp.text)
+    weatherxl.cell(1, 2, today_min_temp.text)
+    weatherxl.cell(1, 3, today_max_temp.text)
+
+    #today_dust_box = weatherbox.find("dl",{"class":"indicator"})
+    today_dusts = weatherbox.findAll("dd",{"class":"lv2"})
+    today_parti_matter = weatherbox.find("dd",{"class":"lv1"})
+    today_dust = today_dusts[0]
+    today_ozon = today_dusts[1]
+    weatherxl.cell(1, 4, today_parti_matter.text)
+    weatherxl.cell(1, 5, today_dust.text)
+    weatherxl.cell(1, 6, today_ozon.text)
+
+    weather_predicts = weatherbox.findAll("li",{"class":{"date_info today"}})
+
+    tom_weather = weather_predicts[1]
+    tom_morning_rain = tom_weather.find("span",{"class":{"point_time morning"}})
+    tom_morning_rain = tom_morning_rain.find("span", {"class": {"num"}})
+    tom_afternoon_rain = tom_weather.find("span",{"class":{"point_time afternoon"}})
+    tom_afternoon_rain = tom_afternoon_rain.find("span", {"class": {"num"}})
+    tom_temp = tom_weather.find("dd")
+    weatherxl.cell(2, 1, tom_morning_rain.text)
+    weatherxl.cell(2, 2, tom_afternoon_rain.text)
+    weatherxl.cell(2, 3, tom_temp.text)
+
+    tom2_weather = weather_predicts[2]
+    tom2_morning_rain = tom_weather.find("span",{"class":{"point_time morning"}})
+    tom2_morning_rain = tom2_morning_rain.find("span", {"class": {"num"}})
+    tom2_afternoon_rain = tom2_weather.find("span",{"class":{"point_time afternoon"}})
+    tom2_afternoon_rain = tom2_afternoon_rain.find("span", {"class": {"num"}})
+    tom2_temp = tom2_weather.find("dd")
+    weatherxl.cell(3, 1, tom2_morning_rain.text)
+    weatherxl.cell(3, 2, tom2_afternoon_rain.text)
+    weatherxl.cell(3, 3, tom2_temp.text)
+
+    f.save('files/weather.xlsx')
+
+    min = str(time.localtime().tm_min)
+    sec = str(time.localtime().tm_sec)
+    print(f"Weather Save Finish at {day} day {min} min {sec} sec")
+
+
+def returnWeatherjson(urlWeather,urlDust):  #날씨 반환하는 함수
+
+    f = xl.load_workbook('files/weather.xlsx', data_only=True)
+    file = f['Sheet']
+
+    temp = {
+              "version": "2.0",
+              "template": {
+                "outputs": [
+                  {
+                    "carousel": {
+                      "type": "basicCard",
+                      "items": [
+                        {
+                          "title": "오늘 날씨",
+                          "description":  f"현재 온도 : {file.cell(1,1).value}\n오늘 최저/최고 기온 : {file.cell(1,2).value}/{file.cell(1,3).value}\n"
+                                          f"미세먼지 : {file.cell(1,4).value}\n초미세먼지 : {file.cell(1,5).value}\n오존 : {file.cell(1,6).value}"
+                        },
+                        {
+                          "title": "내일 날씨",
+                          "description": f"내일 최저/최고 기온 : {file.cell(2,3).value}\n내일 오전/오후 강수 확률 : {file.cell(2,1).value} % / {file.cell(2,2).value} %"
+                        },
+                        {
+                          "title": "모레 날씨",
+                          "description": f"모레 최저/최고 기온 : {file.cell(2,3).value}\n모레 오전/오후 강수 확률 : {file.cell(2,1).value} % / {file.cell(2,2).value} %"
+                        }
+                      ]
+                    }
+                  }
+              ],
+                  "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"}]
+            }
+    }
+
+    return temp
+
+
 saveMenuArr()  #프로그램 최초 실행 시 메뉴 리프레시(저장)
+saveWeather()
 
 schedule.every().monday.at("00:01").do(saveMenuArr)   #월요일 00:01 마다 크롤링
+schedule.every().monday.at("05:30").do(saveMenuArr)
+schedule.every(15).minutes.do(saveWeather)
 
 while True:
     schedule.run_pending()

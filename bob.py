@@ -1,7 +1,5 @@
 from flask import Flask,request,jsonify
 import time
-import bs4
-import urllib.request
 import openpyxl as xl
 
 import os
@@ -17,9 +15,6 @@ week=["월요일","화요일","수요일","목요일","금요일","토요일","�
 ChoiceUrl=""
 ChoiceWeek=0
 ChoiceRes=0
-
-urlGumidust="https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&mra=blQ3&query=%EA%B2%BD%EB%B6%81%20%EB%AF%B8%EC%84%B8%EB%A8%BC%EC%A7%80"
-urlGumiweather="http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=4719069000"
 
 
 StudentTime=str("조식시간 : 08:30 ~ 09:30\n중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30\n토 : 10:00~14:00\n일,공휴일 : 휴무")
@@ -132,52 +127,10 @@ def returnjsonChoiceday():  #날짜 선택지를 json으로 리턴하는 함수
     return temp
 
 
-def returnDust(url):  #구미시 미세먼지 정도 반환하는 함수
+def returnWeatherjson():  #날씨 반환하는 함수
 
-    html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
-    dusts = html.findAll("span",{"class":"value"})
-    dust = dusts[4].text #구미시 미세먼지는 다섯번째
-    intdust=int(dust)
-
-    if(intdust<=30):
-        return str(intdust)+" 좋음"
-    elif (intdust <= 80):
-        return str(intdust) + " 보통"
-    elif (intdust <= 150):
-        return str(intdust) + " 나쁨"
-    else :
-        return str(intdust) + " 매우나쁨"
-
-
-def returnWeather(url):  #구미시 날씨 반환하는 함수
-
-    html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
-
-    dataToday = html.find("data",{"seq":"0"})
-    temperatureToday = dataToday.find('temp').text  #온도
-    skyToday = dataToday.find('wfkor').text  #날씨
-    humidToday = dataToday.find('pop').text  #습도
-    windToday = dataToday.find('wd').text  #풍속
-    Today = "온도 : " + temperatureToday + "\n날씨 : " + skyToday +"\n습도 : " + humidToday + "%\n풍속 : " + windToday + "m/s"
-
-    dataTomorrow = html.find("data",{"seq":"8"})
-    temperatureTom = dataTomorrow.find('temp').text  # 온도
-    skyTom = dataTomorrow.find('wfkor').text  # 날씨
-    humidTom = dataTomorrow.find('pop').text  # 습도
-    windTom = dataTomorrow.find('wd').text  # 풍속
-    Tomorrow = "온도 : " + temperatureTom + "\n날씨 : " + skyTom + "\n습도 : " + humidTom + "%\n풍속 : " + windTom + "m/s"
-
-    data2Tomorrow = html.find("data", {"seq": "16"})
-    temperature2Tom = data2Tomorrow.find('temp').text  # 온도
-    sky2Tom = data2Tomorrow.find('wfkor').text  # 날씨
-    humid2Tom = data2Tomorrow.find('pop').text  # 습도
-    wind2Tom = data2Tomorrow.find('wd').text  # 풍속
-    Tomorrows = "온도 : " + temperature2Tom + "\n날씨 : " + sky2Tom + "\n습도 : " + humid2Tom + "%\n풍속 : " + wind2Tom + "m/s"
-
-    return [Today,Tomorrow,Tomorrows]
-
-
-def returnWeatherjson(urlWeatehr,urlDust): #구미시의 종합 날씨를 json으로 리턴하는 함수
+    f = xl.load_workbook('files/weather.xlsx', data_only=True)
+    file = f['Sheet']
 
     temp = {
               "version": "2.0",
@@ -189,15 +142,16 @@ def returnWeatherjson(urlWeatehr,urlDust): #구미시의 종합 날씨를 json�
                       "items": [
                         {
                           "title": "오늘 날씨",
-                          "description": returnWeather(urlWeatehr)[0] + "\n미세먼지 : " + returnDust(urlDust),
+                          "description":  f"현재 온도 : {file.cell(1,1).value}\n오늘 최저/최고 기온 : {file.cell(1,2).value}/{file.cell(1,3).value}\n"
+                                          f"미세먼지 : {file.cell(1,4).value}\n초미세먼지 : {file.cell(1,5).value}\n오존 : {file.cell(1,6).value}"
                         },
                         {
                           "title": "내일 날씨",
-                          "description": returnWeather(urlWeatehr)[1],
+                          "description": f"내일 최저/최고 기온 : {file.cell(2,3).value}\n내일 오전/오후 강수 확률 : {file.cell(2,1).value} % / {file.cell(2,2).value} %"
                         },
                         {
                           "title": "모레 날씨",
-                          "description": returnWeather(urlWeatehr)[2]
+                          "description": f"모레 최저/최고 기온 : {file.cell(2,3).value}\n모레 오전/오후 강수 확률 : {file.cell(2,1).value} % / {file.cell(2,2).value} %"
                         }
                       ]
                     }
@@ -294,7 +248,7 @@ def bob():
         response_data = returnAvaliableTime(ProfessTime)
 
     elif content == u"날씨 정보":
-        response_data = returnWeatherjson(urlGumiweather,urlGumidust)
+        response_data = returnWeatherjson()
 
     else :
         response_data = jsonMainmenu

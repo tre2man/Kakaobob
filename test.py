@@ -7,6 +7,7 @@ import urllib.request
 import key
 import datetime
 import schedule
+import openpyxl as xl
 
 import os
 import sys
@@ -28,6 +29,10 @@ urlPorum="http://dorm.kumoh.ac.kr/dorm/restaurant_menu01.do"
 urlorum1="http://dorm.kumoh.ac.kr/dorm/restaurant_menu02.do"
 urlorum3="http://dorm.kumoh.ac.kr/dorm/restaurant_menu03.do"
 urlBunsic="http://www.kumoh.ac.kr/ko/restaurant04.do"
+
+urlGumidust="https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&mra=blQ3&query=%EA%B2%BD%EB%B6%81%20%EB%AF%B8%EC%84%B8%EB%A8%BC%EC%A7%80"
+urlGumiweather="http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=4719069000"
+urlNaverGumiWeather = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EA%B5%AC%EB%AF%B8%EC%8B%9C+%EC%96%91%ED%8F%AC%EB%8F%99+%EB%82%A0%EC%94%A8&oquery=%EA%B5%AC%EB%AF%B8%EC%8B%9C+%EB%82%A0%EC%94%A8&tqi=UFk1%2BwprvxZssC9GFFdssssstU4-254477"
 
 urlArr=[urlStudent,urlPorum,urlorum1,urlorum3,urlProfess,urlBunsic]
 saveMenu = []  # 6개의 식당, 7개의 요일
@@ -117,50 +122,59 @@ def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (식당종류
             return "등록된 메뉴가 없습니다. 😥"
 
 
-def returnDust(url):  #구미시 미세먼지 정도 반환
+def returnWeather(url):
+
+    f = xl.Workbook()
+    weatherxl = f.active
 
     html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
-    dusts = html.findAll("span",{"class":"value"})
-    dust = dusts[4].text #구미시 미세먼지는 네번째
-    intdust=int(dust)
+    weatherbox = html.find("div",{"class":"weather_area _mainArea"})
 
-    if(intdust<=30):
-        return str(intdust)+" 좋음"
-    elif (intdust <= 80):
-        return str(intdust) + " 보통"
-    elif (intdust <= 150):
-        return str(intdust) + " 나쁨"
-    else :
-        return str(intdust) + " 매우나쁨"
+    today_weather = weatherbox.find("div",{"class":"info_data"})
+    now_temp = today_weather.find("span",{"class":"todaytemp"})
+    today_min_temp = today_weather.find("span",{"class":"min"})
+    today_max_temp = today_weather.find("span",{"class":"max"})
+    weatherxl.cell(1, 1, now_temp.text)
+    weatherxl.cell(1, 2, today_min_temp.text)
+    weatherxl.cell(1, 3, today_max_temp.text)
 
-def returnWeather(url):  #구미시 날씨 반환
+    #today_dust_box = weatherbox.find("dl",{"class":"indicator"})
+    today_dusts = weatherbox.findAll("dd",{"class":"lv2"})
+    today_parti_matter = weatherbox.find("dd",{"class":"lv1"})
+    today_dust = today_dusts[0]
+    today_ozon = today_dusts[1]
+    weatherxl.cell(1, 4, today_parti_matter.text)
+    weatherxl.cell(1, 5, today_dust.text)
+    weatherxl.cell(1, 6, today_ozon.text)
 
-    html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
-    dataToday = html.find("data",{"seq":"0"})
-    temperatureToday = dataToday.find('temp').text  #온도
-    skyToday = dataToday.find('wfkor').text  #날씨
-    humidToday = dataToday.find('pop').text  #습도
-    windToday = dataToday.find('wd').text  #풍속
-    Today = "온도 : " + temperatureToday + "날씨 : " + skyToday +"\n습도 : " + humidToday + "%\n풍속 : " + windToday
+    weather_predicts = weatherbox.findAll("li",{"class":{"date_info today"}})
 
-    dataTomorrow = html.find("data",{"seq":"8"})
-    temperatureTom = dataTomorrow.find('temp').text  # 온도
-    skyTom = dataTomorrow.find('wfkor').text  # 날씨
-    humidTom = dataTomorrow.find('pop').text  # 습도
-    windTom = dataTomorrow.find('wd').text  # 풍속
-    Tomorrow = "온도 : " + temperatureTom + "날씨 : " + skyTom + "\n습도 : " + humidTom + "%\n풍속 : " + windTom
+    tom_weather = weather_predicts[1]
+    tom_morning_rain = tom_weather.find("span",{"class":{"point_time morning"}})
+    tom_afternoon_rain = tom_weather.find("span",{"class":{"point_time afternoon"}})
+    tom_temp = tom_weather.find("dd")
+    weatherxl.cell(2, 1, tom_morning_rain.text)
+    weatherxl.cell(2, 2, tom_afternoon_rain.text)
+    weatherxl.cell(2, 3, tom_temp.text)
 
-    data2Tomorrow = html.find("data", {"seq": "16"})
-    temperature2Tom = data2Tomorrow.find('temp').text  # 온도
-    sky2Tom = data2Tomorrow.find('wfkor').text  # 날씨
-    humid2Tom = data2Tomorrow.find('pop').text  # 습도
-    wind2Tom = data2Tomorrow.find('wd').text  # 풍속
-    Tomorrows = "온도 : " + temperature2Tom + "날씨 : " + sky2Tom + "\n습도 : " + humid2Tom + "%\n풍속 : " + wind2Tom
+    tom2_weather = weather_predicts[2]
+    tom2_morning_rain = tom2_weather.find("span", {"class": {"point_time morning"}})
+    tom2_afternoon_rain = tom2_weather.find("span", {"class": {"point_time afternoon"}})
+    tom2_temp = tom2_weather.find("dd")
+    weatherxl.cell(3, 1, tom2_morning_rain.text)
+    weatherxl.cell(3, 2, tom2_afternoon_rain.text)
+    weatherxl.cell(3, 3, tom2_temp.text)
 
-    return [Today,Tomorrow,Tomorrows]
+    f.save('files/weather.xlsx')
 
 
-def returnWeatherjson(urlWeatehr,urlDust):
+returnWeather(urlNaverGumiWeather)
+
+
+def returnWeatherjson(urlWeather,urlDust):
+
+    f = xl.load_workbook('files/weather.xlsx', data_only=True)
+    file = f['Sheet']
 
     temp = {
               "version": "2.0",
@@ -172,15 +186,16 @@ def returnWeatherjson(urlWeatehr,urlDust):
                       "items": [
                         {
                           "title": "오늘 날씨",
-                          "description": returnWeather(urlWeatehr)[0] + "\n미세먼지 : " + returnDust(urlDust),
+                          "description":  f"현재 온도 : {file.cell(1,1).value}\n오늘 최저/최고 기온 : {file.cell(1,2).value}/{file.cell(1,3).value}\n"
+                                          f"미세먼지 : {file.cell(1,4).value}\n초미세먼지 : {file.cell(1,5).value}\n오존 : {file.cell(1,6).value}"
                         },
                         {
                           "title": "내일 날씨",
-                          "description": returnWeather(urlWeatehr)[1],
+                          "description": f"내일 최저/최고 기온 : {file.cell(2,3).value}\n내일 오전/오후 강수 확률 : {file.cell(2,1).value}/{file.cell(2,2).value}"
                         },
                         {
                           "title": "모레 날씨",
-                          "description": returnWeather(urlWeatehr)[2]
+                          "description": f"모레 최저/최고 기온 : {file.cell(2,3).value}\n모레 오전/오후 강수 확률 : {file.cell(2,1).value}/{file.cell(2,2).value}"
                         }
                       ]
                     }
@@ -201,8 +216,6 @@ emo="🌞⛅☔⚡⛄"
 
 Restaurant=["학생식당","푸름관","오름1동","오름3동","교직원 식당","분식당"]
 
-urlGumidust="https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&mra=blQ3&query=%EA%B2%BD%EB%B6%81%20%EB%AF%B8%EC%84%B8%EB%A8%BC%EC%A7%80"
-urlGumiweather="http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=4719069000"
 
 urlBustop = key.urlBustop
 urlBusEnd = key.urlBusEnd
@@ -228,25 +241,36 @@ def returnBus(url):
 
 
 
-def saveMenuArr():
+def saveMenuArr():  #금오공대 전체 메뉴를 저장하기 위한 함수
 
-    a = -1
+    day = str(time.localtime().tm_mday)
+    min = str(time.localtime().tm_min)
+    sec = str(time.localtime().tm_sec)
+    print(f"Save Start at {day} day, {min} min {sec} sec")
+
+    f = xl.Workbook()
+    menuxl = f.active
+
     global ChoiceRes
     global saveMenu
+    a = -1
     ChoiceRes = 0
 
     for i in urlArr:   #식당 루프
-        day=["","","","","","",""]
+        b = 0
         a += 1
         for j in range (7) :  #번호 루프
-            print(i,j)
-            day[j] = returnMenu(i,j)
-        saveMenu.append(day)
+            menuxl.cell(a+1,b+1,returnMenu(i,j))  #해당하는 셀에 메뉴 정보를 저장
+            b += 1
         ChoiceRes += 1
 
-    print(saveMenu)
+    f.save('files/data.xlsx')  #최종적으로 파일 저장
 
-saveMenuArr()
+    min = str(time.localtime().tm_min)
+    sec = str(time.localtime().tm_sec)
+    print(f"Save Finish at {day} day {min} min {sec} sec")
+
+#saveMenuArr()
 
 #print(returnBus(urlBustop))
 #print(returnDust(gumidust))

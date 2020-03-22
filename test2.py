@@ -1,14 +1,13 @@
 import openpyxl as xl
+from flask import Flask,request,jsonify
+import time
+import bs4
+import urllib.request
 
-def strings():
-    return "함수"
+url = "https://www.weather.go.kr/w/weather/today.do#last-recent"
 
-f = xl.Workbook()
-file = f.active
+weatherbefore = "https://www.weather.go.kr/weather/climate/past_cal.jsp?stn=279&yy=2020&mm=3&obs=1&x=26&y=14"
 
-a = 1
-b = 5
-
-file.cell(a,b,strings())
-f.save("data.xlsx")
+html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
+print(html)
 
