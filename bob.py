@@ -89,7 +89,6 @@ def openMenu(a,b):
 
     return file.cell(a+1,b+1).value
 
-print(openMenu(0,0))
 
 def returnAvaliableTime(index):  #식당 이용 가능 시간을 json으로 리턴하는 함수
 
