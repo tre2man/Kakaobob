@@ -99,14 +99,15 @@ def openMenu(a,b):  #해당 값의 셀 내용 반환하는 함수(x,y)
     return file.cell(a+1,b+1).value
 
 
-def saveWeather(): #날씨 크롤링하는 함수
+def saveWeather(): #날씨 크롤링 후 엑셀에 저장하는 함수
 
     url = urlNaverGumiWeather
 
     day = str(time.localtime().tm_mday)
+    hour = str(time.localtime().tm_hour)
     min = str(time.localtime().tm_min)
     sec = str(time.localtime().tm_sec)
-    print(f"Weather Save Start at {day} day, {min} min {sec} sec")
+    print(f"Weather Save Start at {day} day, {hour}:{min}:{sec}")
 
     f = xl.Workbook()
     weatherxl = f.active
@@ -155,12 +156,13 @@ def saveWeather(): #날씨 크롤링하는 함수
 
     f.save('files/weather.xlsx')
 
+    hour = str(time.localtime().tm_hour)
     min = str(time.localtime().tm_min)
     sec = str(time.localtime().tm_sec)
-    print(f"Weather Save Finish at {day} day {min} min {sec} sec")
+    print(f"Weather Save Finish at {day} day,{hour}:{min}:{sec}")
 
 
-def returnWeatherjson(urlWeather,urlDust):  #날씨 반환하는 함수
+def returnWeatherjson():  #날씨정보 엑셀에서 추출하는 함수
 
     f = xl.load_workbook('files/weather.xlsx', data_only=True)
     file = f['Sheet']
@@ -197,7 +199,7 @@ def returnWeatherjson(urlWeather,urlDust):  #날씨 반환하는 함수
     return temp
 
 
-#saveMenuArr()  #프로그램 최초 실행 시 메뉴 리프레시(저장)
+saveMenuArr()  #프로그램 최초 실행 시 메뉴 리프레시(저장)
 saveWeather()
 
 schedule.every().monday.at("00:01").do(saveMenuArr)   #월요일 00:01 마다 크롤링,밑에도 알아서
