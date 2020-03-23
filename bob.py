@@ -84,11 +84,12 @@ def returnMenujson(res,week):  #식당 메뉴를 json으로 리턴하는 함수
 
 def openMenu(a,b):
 
-    f = xl.load_workbook('files/data.xlsx',data_only=True)
+    f = xl.load_workbook('files/menu.xlsx',data_only=True)
     file = f['Sheet']
 
     return file.cell(a+1,b+1).value
 
+print(openMenu(0,0))
 
 def returnAvaliableTime(index):  #식당 이용 가능 시간을 json으로 리턴하는 함수
 

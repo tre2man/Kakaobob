@@ -67,9 +67,10 @@ def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (식당종류
 def saveMenuArr():  #금오공대 전체 메뉴를 저장하기 위한 함수
 
     day = str(time.localtime().tm_mday)
+    hour = str(time.localtime().tm_hour)
     min = str(time.localtime().tm_min)
     sec = str(time.localtime().tm_sec)
-    print(f"Menu Save Start at {day} day, {min} min {sec} sec")
+    print(f"Menu Save Start at {day} day, {hour}:{min}:{sec}")
 
     f = xl.Workbook()
     menuxl = f.active
@@ -86,9 +87,10 @@ def saveMenuArr():  #금오공대 전체 메뉴를 저장하기 위한 함수
 
     f.save('files/menu.xlsx')  #최종적으로 파일 저장
 
+    hour = str(time.localtime().tm_hour)
     min = str(time.localtime().tm_min)
     sec = str(time.localtime().tm_sec)
-    print(f"Menu Save Finish at {day} day {min} min {sec} sec")
+    print(f"Menu Save Finish at {day} day,{hour}:{min}:{sec}")
 
 
 def openMenu(a,b):  #해당 값의 셀 내용 반환하는 함수(x,y)
