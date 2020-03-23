@@ -18,7 +18,9 @@ urlorum1="http://dorm.kumoh.ac.kr/dorm/restaurant_menu02.do"
 urlorum3="http://dorm.kumoh.ac.kr/dorm/restaurant_menu03.do"
 urlBunsic="http://www.kumoh.ac.kr/ko/restaurant04.do"
 
-urlNaverGumiWeather = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%EA%B5%AC%EB%AF%B8%EC%8B%9C+%EC%96%91%ED%8F%AC%EB%8F%99+%EB%82%A0%EC%94%A8&oquery=%EA%B5%AC%EB%AF%B8%EC%8B%9C+%EB%82%A0%EC%94%A8&tqi=UFk1%2BwprvxZssC9GFFdssssstU4-254477"
+urlNaverGumiWeather = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%" \
+                      "EA%B5%AC%EB%AF%B8%EC%8B%9C+%EC%96%91%ED%8F%AC%EB%8F%99+%EB%82%A0%EC%94%A8&oquery" \
+                      "=%EA%B5%AC%EB%AF%B8%EC%8B%9C+%EB%82%A0%EC%94%A8&tqi=UFk1%2BwprvxZssC9GFFdssssstU4-254477"
 
 urlArr=[urlStudent,urlPorum,urlorum1,urlorum3,urlProfess,urlBunsic]
 
@@ -64,7 +66,7 @@ def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (식당종류
             return "등록된 메뉴가 없습니다. 😥"
 
 
-def saveMenuArr():  #금오공대 전체 메뉴를 저장하기 위한 함수
+def saveMenuArr():  #금오공대 전체 메뉴를 엑셀에 저장하기 위한 함수
 
     day = str(time.localtime().tm_mday)
     hour = str(time.localtime().tm_hour)
@@ -83,22 +85,15 @@ def saveMenuArr():  #금오공대 전체 메뉴를 저장하기 위한 함수
         for j in range (7) :  #번호 루프
             menuxl.cell(ChoiceRes+1,b+1,returnMenu(i,j))  #해당하는 셀에 메뉴 정보를 저장
             b += 1
-        ChoiceRes += 10
+        ChoiceRes += 1
 
     f.save('files/menu.xlsx')  #최종적으로 파일 저장
 
+    day = str(time.localtime().tm_mday)
     hour = str(time.localtime().tm_hour)
     min = str(time.localtime().tm_min)
     sec = str(time.localtime().tm_sec)
-    print(f"Menu Save Finish at {day} day,{hour}:{min}:{sec}")
-
-
-def openMenu(a,b):  #해당 값의 셀 내용 반환하는 함수(x,y)
-
-    f = xl.load_workbook('files/menu.xlsx',data_only=True)
-    file = f['Sheet']
-
-    return file.cell(a+1,b+1).value
+    print(f"Menu Save Finish at {day} day, {hour}:{min}:{sec}")
 
 
 def saveWeather(): #날씨 크롤링 후 엑셀에 저장하는 함수
@@ -161,10 +156,26 @@ def saveWeather(): #날씨 크롤링 후 엑셀에 저장하는 함수
     hour = str(time.localtime().tm_hour)
     min = str(time.localtime().tm_min)
     sec = str(time.localtime().tm_sec)
-    print(f"Weather Save Finish at {day} day,{hour}:{min}:{sec}")
+    print(f"Weather Save Finish at {day} day, {hour}:{min}:{sec}")
 
 
-def returnWeatherjson():  #날씨정보 엑셀에서 추출하는 함수
+def returnMenujson(res,week):  #식당 메뉴 엑셀에서 추출 후 json으로 리턴하는 함수
+
+    f = xl.load_workbook('files/menu.xlsx', data_only=True)
+    file = f['Sheet']
+
+    temp = {
+        "version": "2.0",
+        "template": {"outputs": [{"simpleText": {"text": file.cell(res+1,week+1).value}}],
+                     "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"},
+                                      ]
+                     }
+        }
+
+    return temp
+
+
+def returnWeatherjson():  #날씨정보 엑셀에서 추출 후 json으로 리턴하는 함수
 
     f = xl.load_workbook('files/weather.xlsx', data_only=True)
     file = f['Sheet']
@@ -204,7 +215,7 @@ def returnWeatherjson():  #날씨정보 엑셀에서 추출하는 함수
 saveMenuArr()  #프로그램 최초 실행 시 메뉴 리프레시(저장)
 saveWeather()
 
-schedule.every().monday.at("00:01").do(saveMenuArr)   #월요일 00:01 마다 크롤링,밑에도 알아서
+schedule.every().monday.at("00:01").do(saveMenuArr)   #특정 시간 마다 크롤링
 schedule.every().monday.at("05:30").do(saveMenuArr)
 schedule.every().wednesday.at("02:00").do(saveMenuArr)
 schedule.every(15).minutes.do(saveWeather)
@@ -212,6 +223,3 @@ schedule.every(15).minutes.do(saveWeather)
 while True:
     schedule.run_pending()
     time.sleep(1)
-
-
-

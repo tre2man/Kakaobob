@@ -7,8 +7,6 @@ import sys
 
 app = Flask(__name__)
 
-#식당성정->날짜설정->식단확인->처음으로
-
 Restaurant=["학생식당","푸름관","오름1동","오름3동","교직원 식당","분식당"]
 week=["월요일","화요일","수요일","목요일","금요일","토요일","일요일"]
 
@@ -146,7 +144,7 @@ def returnWeatherjson():  #날씨 반환하는 함수
                         },
                         {
                           "title": "모레 날씨",
-                          "description": f"모레 최저/최고 기온 : {file.cell(2,3).value}\n모레 오전/오후 강수 확률 : {file.cell(2,1).value} % / {file.cell(2,2).value} %"
+                          "description": f"모레 최저/최고 기온 : {file.cell(3,3).value}\n모레 오전/오후 강수 확률 : {file.cell(3,1).value} % / {file.cell(3,2).value} %"
                         }
                       ]
                     }
@@ -252,6 +250,3 @@ def bob():
 
 if __name__=="__main__":
      app.run(host="0.0.0.0", port=5000)
-
-
-
