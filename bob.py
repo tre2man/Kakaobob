@@ -71,23 +71,18 @@ jsonChoiceAvailableTime = {
 
 def returnMenujson(res,week):  #식당 메뉴를 json으로 리턴하는 함수
 
+    f = xl.load_workbook('files/menu.xlsx', data_only=True)
+    file = f['Sheet']
+
     temp = {
         "version": "2.0",
-        "template": {"outputs": [{"simpleText": {"text": openMenu(res,week)}}],
+        "template": {"outputs": [{"simpleText": {"text": file.cell(res+1,week+1).value}}],
                      "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"},
                                       ]
                      }
         }
 
     return temp
-
-
-def openMenu(a,b):
-
-    f = xl.load_workbook('files/menu.xlsx',data_only=True)
-    file = f['Sheet']
-
-    return file.cell(a+1,b+1).value
 
 
 def returnAvaliableTime(index):  #식당 이용 가능 시간을 json으로 리턴하는 함수

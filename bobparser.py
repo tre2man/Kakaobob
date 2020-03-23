@@ -83,7 +83,7 @@ def saveMenuArr():  #금오공대 전체 메뉴를 저장하기 위한 함수
         for j in range (7) :  #번호 루프
             menuxl.cell(ChoiceRes+1,b+1,returnMenu(i,j))  #해당하는 셀에 메뉴 정보를 저장
             b += 1
-        ChoiceRes += 1
+        ChoiceRes += 10
 
     f.save('files/menu.xlsx')  #최종적으로 파일 저장
 
