@@ -11,12 +11,12 @@ ChoiceUrl=""
 ChoiceDay=0
 ChoiceRes=0
 
-urlStudent="http://www.kumoh.ac.kr/ko/restaurant01.do"
-urlProfess="http://www.kumoh.ac.kr/ko/restaurant02.do"
-urlPorum="http://dorm.kumoh.ac.kr/dorm/restaurant_menu01.do"
-urlorum1="http://dorm.kumoh.ac.kr/dorm/restaurant_menu02.do"
-urlorum3="http://dorm.kumoh.ac.kr/dorm/restaurant_menu03.do"
-urlBunsic="http://www.kumoh.ac.kr/ko/restaurant04.do"
+urlStudent = "http://www.kumoh.ac.kr/ko/restaurant01.do"
+urlProfess = "http://www.kumoh.ac.kr/ko/restaurant02.do"
+urlPorum = "http://dorm.kumoh.ac.kr/dorm/restaurant_menu01.do"
+urlorum1 = "http://dorm.kumoh.ac.kr/dorm/restaurant_menu02.do"
+urlorum3 = "http://dorm.kumoh.ac.kr/dorm/restaurant_menu03.do"
+urlBunsic = "http://www.kumoh.ac.kr/ko/restaurant04.do"
 
 urlNaverGumiWeather = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%" \
                       "EA%B5%AC%EB%AF%B8%EC%8B%9C+%EC%96%91%ED%8F%AC%EB%8F%99+%EB%82%A0%EC%94%A8&oquery" \

@@ -7,13 +7,13 @@ import sys
 
 app = Flask(__name__)
 
-Restaurant=["학생식당","푸름관","오름1동","오름3동","교직원 식당","분식당"]
-week=["월요일","화요일","수요일","목요일","금요일","토요일","일요일"]
-
 ChoiceUrl=""
 ChoiceWeek=0
 ChoiceRes=0
+Lastindex = 1
 
+Restaurant=["학생식당","푸름관","오름1동","오름3동","교직원 식당","분식당"]
+week=["월요일","화요일","수요일","목요일","금요일","토요일","일요일"]
 
 StudentTime=str("조식시간 : 08:30 ~ 09:30\n중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30\n토 : 10:00~14:00\n일,공휴일 : 휴무")
 
@@ -85,7 +85,7 @@ def returnMenujson(res,week):  #식당 메뉴를 json으로 리턴하는 함수
 
 def returnAvaliableTime(index):  #식당 이용 가능 시간을 json으로 리턴하는 함수
 
-    temp={
+    temp = {
          "version": "2.0",
          "template": {
              "outputs": [{"simpleText": {"text": index}}],
@@ -157,90 +157,123 @@ def returnWeatherjson():  #날씨 반환하는 함수
     return temp
 
 
+def saveDBres(user,res):
+
+    global Lastindex
+    f = xl.load_workbook('files/user.xlsx', data_only=True)
+    file = ['Sheet']
+
+    for i in range(1, 501):
+        if file.cell(i, 1).value == user :
+            file.cell(i, 2, res)
+            f.save('files/user.xlsx')
+            print(f'Saved res in {i},{2}')
+            return
+        elif i == 500 :
+            file.cell(Lastindex, 1, user)
+            file.cell(Lastindex, 2, res)
+            Lastindex += 1
+            f.save('files/user.xlsx')
+            print(f'Add user in {Lastindex},{1}')
+            print(f'Saved res in {Lastindex},{2}')
+            return
+
+
+def findRes(user):
+
+    f = xl.load_workbook('files/user.xlsx', data_only=True)
+    file = f['Sheet']
+
+    for i in range(1, 501):
+        if file.cell(i, 1).value == user :
+            return int(file.cell(i,2).value)
+
+
 @app.route('/message', methods=['POST'])  #json으로 들어온 사용자 요청을 보고 판단
 def bob():
 
-    content = request.get_json() #사용자가 보낸 메세지 입력
-    content = content['userRequest']
-    content = content['utterance']
+    contents = request.get_json()    #사용자가 보낸 메세지 입력
+
+    says = contents['userRequest']['utterance']         #사용자의 발화 추출
+    user_key = contents['userRequest']['user']['id']    #사용자의 id 추출
 
     global ChoiceUrl,ChoiceRes,Choiceweek,jsonChoiceday,jsonChoiceRes
 
-    if content==u"학생식당":
+    if says==u"학생식당":
         response_data = returnjsonChoiceday()
-        ChoiceRes = 0
+        saveDBres(user_key, 0)
 
-    elif content==u"푸름관":
+    elif says==u"푸름관":
         response_data = returnjsonChoiceday()
-        ChoiceRes = 1
+        saveDBres(user_key, 1)
 
-    elif content==u"오름1동":
+    elif says==u"오름1동":
         response_data = returnjsonChoiceday()
-        ChoiceRes = 2
+        saveDBres(user_key, 2)
 
-    elif content == u"오름3동":
+    elif says == u"오름3동":
         response_data = returnjsonChoiceday()
-        ChoiceRes = 3
+        saveDBres(user_key, 3)
 
-    elif content==u"교직원":
+    elif says==u"교직원":
         response_data = returnjsonChoiceday()
-        ChoiceRes = 4
+        saveDBres(user_key, 4)
 
-    elif content==u"분식당":
+    elif says==u"분식당":
         response_data = returnjsonChoiceday()
-        ChoiceRes = 5
+        saveDBres(user_key, 5)
 
-    elif content==u"오늘":
+    elif says==u"오늘":
         ChoiceWeek = time.localtime().tm_wday
-        response_data = returnMenujson(ChoiceRes,ChoiceWeek)
+        response_data = returnMenujson(findRes(user_key),ChoiceWeek)
 
-    elif content==u"월요일":
+    elif says==u"월요일":
         ChoiceWeek = 0
-        response_data = returnMenujson(ChoiceRes,ChoiceWeek)
+        response_data = returnMenujson(findRes(user_key),ChoiceWeek)
 
-    elif content==u"화요일":
+    elif says==u"화요일":
         ChoiceWeek = 1
-        response_data = returnMenujson(ChoiceRes,ChoiceWeek)
+        response_data = returnMenujson(findRes(user_key),ChoiceWeek)
 
-    elif content==u"수요일":
+    elif says==u"수요일":
         ChoiceWeek = 2
-        response_data = returnMenujson(ChoiceRes,ChoiceWeek)
+        response_data = returnMenujson(findRes(user_key),ChoiceWeek)
 
-    elif content==u"목요일":
+    elif says==u"목요일":
         ChoiceWeek = 3
-        response_data = returnMenujson(ChoiceRes,ChoiceWeek)
+        response_data = returnMenujson(findRes(user_key),ChoiceWeek)
 
-    elif content==u"금요일":
+    elif says==u"금요일":
         ChoiceWeek = 4
-        response_data = returnMenujson(ChoiceRes,ChoiceWeek)
+        response_data = returnMenujson(findRes(user_key),ChoiceWeek)
 
-    elif content==u"토요일":
+    elif says==u"토요일":
         ChoiceWeek = 5
-        response_data = returnMenujson(ChoiceRes,ChoiceWeek)
+        response_data = returnMenujson(findRes(user_key),ChoiceWeek)
 
-    elif content==u"일요일":
+    elif says==u"일요일":
         ChoiceWeek = 6
-        response_data = returnMenujson(ChoiceRes,ChoiceWeek)
+        response_data = returnMenujson(findRes(user_key),ChoiceWeek)
 
-    elif content==u"처음으로" :
+    elif says==u"처음으로" :
         response_data=jsonMainmenu
 
-    elif content==u"식단 정보":
+    elif says==u"식단 정보":
         response_data=jsonChoiceRes
 
-    elif content==u"식당 이용 가능 시간":
+    elif says==u"식당 이용 가능 시간":
         response_data=jsonChoiceAvailableTime
 
-    elif content==u"학생식당 시간":
+    elif says==u"학생식당 시간":
         response_data=returnAvaliableTime(StudentTime)
 
-    elif content == u"기숙사 시간":
+    elif says == u"기숙사 시간":
         response_data = returnAvaliableTime(DomitoryTime)
 
-    elif content == u"교직원 시간":
+    elif says == u"교직원 시간":
         response_data = returnAvaliableTime(ProfessTime)
 
-    elif content == u"날씨 정보":
+    elif says == u"날씨 정보":
         response_data = returnWeatherjson()
 
     else :
