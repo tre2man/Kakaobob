@@ -5,10 +5,6 @@ import schedule
 import openpyxl as xl
 
 
-Restaurant=["학생식당","푸름관","오름1동","오름3동","교직원 식당"]
-
-ChoiceUrl=""
-ChoiceDay=0
 ChoiceRes=0
 
 urlStudent = "http://www.kumoh.ac.kr/ko/restaurant01.do"

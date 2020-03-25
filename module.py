@@ -1,53 +1,44 @@
-from flask import Flask,request,jsonify
 import time
 import openpyxl as xl
 
-def returnMain():
 
-    jsonMainmenu = {
-        "version": "2.0",
-        "template": {"outputs": [{"simpleText": {"text": "원하시는 기능을 선택해 주세요"}}],
-                     "quickReplies": [{"label": "식단 정보", "action": "message", "messageText": "식단 정보"},
-                                      {"label": "날씨 정보", "action": "message", "messageText": "날씨 정보"},
-                                      {"label": "식당 이용 가능 시간", "action": "message", "messageText": "식당 이용 가능 시간"}
-                                      ]
-                     }
-    }
+Restaurant=["학생식당","푸름관","오름1동","오름3동","교직원 식당","분식당"]
+week=["월요일","화요일","수요일","목요일","금요일","토요일","일요일"]
 
-    return jsonMainmenu
-
-
-def returnChoiceRes():
-
-    jsonChoiceRes = {
-        "version": "2.0",
-        "template": {"outputs": [{"simpleText": {"text": "🍽 식당을 선택해 주세요. 🍽"}}],
-                     "quickReplies": [{"label": "학생식당", "action": "message", "messageText": "학생식당"},
-                                      {"label": "푸름관", "action": "message", "messageText": "푸름관"},
-                                      {"label": "오름1동", "action": "message", "messageText": "오름1동"},
-                                      {"label": "오름3동", "action": "message", "messageText": "오름3동"},
-                                      {"label": "교직원", "action": "message", "messageText": "교직원"},
-                                      {"label": "분식당", "action": "message", "messageText": "분식당"}
-                                      ]
-                     }
-    }
-
-    return jsonChoiceRes
+jsonMainmenu = {
+    "version": "2.0",
+    "template": {"outputs": [{"simpleText": {"text": "원하시는 기능을 선택해 주세요"}}],
+                 "quickReplies": [{"label": "식단 정보", "action": "message", "messageText": "식단 정보"},
+                                  {"label": "날씨 정보", "action": "message", "messageText": "날씨 정보"},
+                                  {"label": "식당 이용 가능 시간", "action": "message", "messageText": "식당 이용 가능 시간"}
+                                  ]
+                 }
+}
 
 
-def returnAvailableTimeChoice():
+jsonChoiceRes = {
+    "version": "2.0",
+    "template": {"outputs": [{"simpleText": {"text": "🍽 식당을 선택해 주세요. 🍽"}}],
+                 "quickReplies": [{"label": "학생식당", "action": "message", "messageText": "학생식당"},
+                                  {"label": "푸름관", "action": "message", "messageText": "푸름관"},
+                                  {"label": "오름1동", "action": "message", "messageText": "오름1동"},
+                                  {"label": "오름3동", "action": "message", "messageText": "오름3동"},
+                                  {"label": "교직원", "action": "message", "messageText": "교직원"},
+                                  {"label": "분식당", "action": "message", "messageText": "분식당"}
+                                  ]
+                 }
+}
 
-    jsonChoiceAvailableTime = {
-        "version": "2.0",
-        "template": {"outputs": [{"simpleText": {"text": "식당을 선택해 주세요."}}],
-                     "quickReplies": [{"label": "학생식당", "action": "message", "messageText": "학생식당 시간"},
-                                      {"label": "기숙사", "action": "message", "messageText": "기숙사 시간"},
-                                      {"label": "교직원", "action": "message", "messageText": "교직원 시간"},
-                                      ]
-                     }
-    }
 
-    return jsonChoiceAvailableTime
+jsonChoiceAvailableTime = {
+    "version": "2.0",
+    "template": {"outputs": [{"simpleText": {"text": "식당을 선택해 주세요."}}],
+                 "quickReplies": [{"label": "학생식당", "action": "message", "messageText": "학생식당 시간"},
+                                  {"label": "기숙사", "action": "message", "messageText": "기숙사 시간"},
+                                  {"label": "교직원", "action": "message", "messageText": "교직원 시간"},
+                                  ]
+                 }
+}
 
 
 def returnMenujson(res,week):  #식당 메뉴를 json으로 리턴하는 함수
