@@ -161,21 +161,24 @@ def saveDBres(user,res):
 
     global Lastindex
     f = xl.load_workbook('files/user.xlsx', data_only=True)
-    file = ['Sheet']
+    file = f['Sheet']
 
     for i in range(1, 501):
         if file.cell(i, 1).value == user :
             file.cell(i, 2, res)
             f.save('files/user.xlsx')
-            print(f'Saved res in {i},{2}')
+            print(f'Saved res in {i}')
             return
         elif i == 500 :
             file.cell(Lastindex, 1, user)
             file.cell(Lastindex, 2, res)
-            Lastindex += 1
             f.save('files/user.xlsx')
-            print(f'Add user in {Lastindex},{1}')
-            print(f'Saved res in {Lastindex},{2}')
+
+            print(f'Add user in {Lastindex}')
+            print(f'Saved res in {Lastindex}')
+
+            Lastindex += 1
+
             return
 
 
@@ -256,16 +259,16 @@ def bob():
         response_data = returnMenujson(findRes(user_key),ChoiceWeek)
 
     elif says==u"처음으로" :
-        response_data=jsonMainmenu
+        response_data = jsonMainmenu
 
     elif says==u"식단 정보":
-        response_data=jsonChoiceRes
+        response_data = jsonChoiceRes
 
     elif says==u"식당 이용 가능 시간":
-        response_data=jsonChoiceAvailableTime
+        response_data = jsonChoiceAvailableTime
 
     elif says==u"학생식당 시간":
-        response_data=returnAvaliableTime(StudentTime)
+        response_data = returnAvaliableTime(StudentTime)
 
     elif says == u"기숙사 시간":
         response_data = returnAvaliableTime(DomitoryTime)
