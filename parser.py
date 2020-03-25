@@ -155,59 +155,6 @@ def saveWeather(): #날씨 크롤링 후 엑셀에 저장하는 함수
     print(f"Weather Save Finish at {day} day, {hour}:{min}:{sec}")
 
 
-def returnMenujson(res,week):  #식당 메뉴 엑셀에서 추출 후 json으로 리턴하는 함수
-
-    f = xl.load_workbook('files/menu.xlsx', data_only=True)
-    file = f['Sheet']
-
-    temp = {
-        "version": "2.0",
-        "template": {"outputs": [{"simpleText": {"text": file.cell(res+1,week+1).value}}],
-                     "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"},
-                                      ]
-                     }
-        }
-
-    return temp
-
-
-def returnWeatherjson():  #날씨정보 엑셀에서 추출 후 json으로 리턴하는 함수
-
-    f = xl.load_workbook('files/weather.xlsx', data_only=True)
-    file = f['Sheet']
-
-    temp = {
-              "version": "2.0",
-              "template": {
-                "outputs": [
-                  {
-                    "carousel": {
-                      "type": "basicCard",
-                      "items": [
-                        {
-                          "title": "오늘 날씨",
-                          "description":  f"현재 온도 : {file.cell(1,1).value}\n오늘 최저/최고 기온 : {file.cell(1,2).value}/{file.cell(1,3).value}\n"
-                                          f"미세먼지 : {file.cell(1,4).value}\n초미세먼지 : {file.cell(1,5).value}\n오존 : {file.cell(1,6).value}"
-                        },
-                        {
-                          "title": "내일 날씨",
-                          "description": f"내일 최저/최고 기온 : {file.cell(2,3).value}\n내일 오전/오후 강수 확률 : {file.cell(2,1).value} % / {file.cell(2,2).value} %"
-                        },
-                        {
-                          "title": "모레 날씨",
-                          "description": f"모레 최저/최고 기온 : {file.cell(2,3).value}\n모레 오전/오후 강수 확률 : {file.cell(2,1).value} % / {file.cell(2,2).value} %"
-                        }
-                      ]
-                    }
-                  }
-              ],
-                  "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"}]
-            }
-    }
-
-    return temp
-
-
 saveMenuArr()  #프로그램 최초 실행 시 메뉴 리프레시(저장)
 saveWeather()
 
