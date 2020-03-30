@@ -18,11 +18,9 @@ urlNaverGumiWeather = "https://search.naver.com/search.naver?sm=tab_hty.top&wher
                       "EA%B5%AC%EB%AF%B8%EC%8B%9C+%EC%96%91%ED%8F%AC%EB%8F%99+%EB%82%A0%EC%94%A8&oquery" \
                       "=%EA%B5%AC%EB%AF%B8%EC%8B%9C+%EB%82%A0%EC%94%A8&tqi=UFk1%2BwprvxZssC9GFFdssssstU4-254477"
 
+urlTodayGumiWeather = "http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=4719069000"
+
 urlArr=[urlStudent,urlPorum,urlorum1,urlorum3,urlProfess,urlBunsic]
-
-
-###변수 선언 완료
-###함수 선언 시작
 
 
 def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (식당종류,날짜)
@@ -76,11 +74,11 @@ def saveMenuArr():  #금오공대 전체 메뉴를 엑셀에 저장하기 위한
     global ChoiceRes
     ChoiceRes = 0
 
-    for i in urlArr:   #식당 루프
-        b = 0
-        for j in range (7) :  #번호 루프
-            menuxl.cell(ChoiceRes+1,b+1,returnMenu(i,j))  #해당하는 셀에 메뉴 정보를 저장
-            b += 1
+    for res in urlArr:   #식당 루프
+        col = 0
+        for week in range (7) :  #번호 루프
+            menuxl.cell(ChoiceRes+1,col+1,returnMenu(res,week))  #해당하는 셀에 메뉴 정보를 저장
+            col += 1
         ChoiceRes += 1
 
     f.save('files/menu.xlsx')  #최종적으로 파일 저장
@@ -95,6 +93,9 @@ def saveMenuArr():  #금오공대 전체 메뉴를 엑셀에 저장하기 위한
 def saveWeather(): #날씨 크롤링 후 엑셀에 저장하는 함수
 
     url = urlNaverGumiWeather
+    url2 = urlTodayGumiWeather
+
+    Skystate = ["없음","비","비/눈","눈","소나기"]
 
     day = str(time.localtime().tm_mday)
     hour = str(time.localtime().tm_hour)
@@ -106,13 +107,16 @@ def saveWeather(): #날씨 크롤링 후 엑셀에 저장하는 함수
     weatherxl = f.active
 
     html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
+    html2 = bs4.BeautifulSoup(urllib.request.urlopen(url2), "html.parser")
+
+    today_rain = html2.find("pty")
     weatherbox = html.find("div",{"class":"weather_area _mainArea"})
 
     today_weather = weatherbox.find("div",{"class":"info_data"})
     now_temp = today_weather.find("span",{"class":"todaytemp"})
     today_min_temp = today_weather.find("span",{"class":"min"})
     today_max_temp = today_weather.find("span",{"class":"max"})
-    weatherxl.cell(1, 1, now_temp.text)
+    weatherxl.cell(1, 1, now_temp.text + "°")
     weatherxl.cell(1, 2, today_min_temp.text)
     weatherxl.cell(1, 3, today_max_temp.text)
 

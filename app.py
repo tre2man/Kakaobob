@@ -8,7 +8,6 @@ import sys
 
 app = Flask(__name__)
 
-ChoiceUrl=""
 ChoiceWeek=0
 ChoiceRes=0
 Lastindex = 1

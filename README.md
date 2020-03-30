@@ -19,16 +19,14 @@
 
 - 동작 결과 - 식단
 
-<img src = "/img/bob.jpg"></img>
+<img src = "/img/screenshot_bob.jpg"></img>
 
 - 동작 결과 - 날씨
 
-<img src = "/img/weather.jpg"></img>
+<img src = "/img/screenshot_weather.jpg"></img>
 
 ### 후기
 
 - AWS 에 대해 알아볼 수 있는 좋은 계기가 되었다. 나도 모르게 여기 들인 돈이 생각보다 많다.
-
-
 
 #### 이상 전자공학부 3학년 나부랭이였습니다.
