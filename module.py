@@ -14,6 +14,7 @@ jsonMainmenu = {
     "version": "2.0",
     "template": {"outputs": [{"simpleText": {"text": "원하시는 기능을 선택해 주세요"}}],
                  "quickReplies": [{"label": "식단 정보", "action": "message", "messageText": "식단 정보"},
+                                  {"label": "버스 정보", "action": "message", "messageText": "버스 정보"},
                                   {"label": "날씨 정보", "action": "message", "messageText": "날씨 정보"},
                                   {"label": "식당 이용 가능 시간", "action": "message", "messageText": "식당 이용 가능 시간"}
                                   ]
@@ -148,20 +149,39 @@ def returnBus():
             bus_no = bus.find("li",{"class":"bus_no"}).text
             bus_state = bus.find("li",{"class":"bus_state"}).text
             bus_now = bus.findAll("li")
-            value += f"\n{bus_no.ljust(9)}  {bus_state.ljust(7)}  {bus_now[3].text}"
+            try:
+                a = int(bus_state[3:])
+            except:
+                value += f"\n{bus_no.ljust(6)}{bus_state.ljust(3)}{bus_now[3].text}"
+            else:
+                value += f"\n{bus_no.ljust(6)}{bus_state.ljust(7)}{bus_now[3].text}"
 
-        return "버스 번호 / 버스 시간 / 현재 위치\n" + value.lstrip("\n")
+        return value.lstrip("\n")
 
 
-def returnBusTime():  #식당 이용 가능 시간을 json으로 리턴하는 함수
+def returnBusTime():
 
     temp = {
-         "version": "2.0",
-         "template": {
-             "outputs": [{"simpleText": {"text": returnBus()}}],
-             "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"},
-                              ]
-                     }
-         }
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+                    "carousel": {
+                        "type": "basicCard",
+                        "items": [
+                            {
+                                "title": "오늘 날씨",
+                                "description": returnBus()
+                            }
+                        ]
+                    }
+                }
+            ],
+            "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"}]
+        }
+    }
 
     return temp
+
+
+print(returnBus())
