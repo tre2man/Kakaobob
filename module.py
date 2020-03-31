@@ -149,12 +149,7 @@ def returnBus():
             bus_no = bus.find("li",{"class":"bus_no"}).text
             bus_state = bus.find("li",{"class":"bus_state"}).text
             bus_now = bus.findAll("li")
-            try:
-                a = int(bus_state[3:])
-            except:
-                value += f"\n{bus_no.ljust(6)}{bus_state.ljust(3)}{bus_now[3].text}"
-            else:
-                value += f"\n{bus_no.ljust(6)}{bus_state.ljust(7)}{bus_now[3].text}"
+            value += f"\n{bus_no}   {bus_state}   {bus_now[3].text}"
 
         return value.lstrip("\n")
 
@@ -170,7 +165,7 @@ def returnBusTime():
                         "type": "basicCard",
                         "items": [
                             {
-                                "title": "오늘 날씨",
+                                "title": "버스 번호 / 남은 시간 / 현재 위치",
                                 "description": returnBus()
                             }
                         ]
