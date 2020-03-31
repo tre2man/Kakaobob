@@ -1,3 +1,5 @@
+#식단과 날씨 수집하는 부분
+
 import time
 import bs4
 import urllib.request
@@ -19,6 +21,8 @@ urlNaverGumiWeather = "https://search.naver.com/search.naver?sm=tab_hty.top&wher
                       "=%EA%B5%AC%EB%AF%B8%EC%8B%9C+%EB%82%A0%EC%94%A8&tqi=UFk1%2BwprvxZssC9GFFdssssstU4-254477"
 
 urlTodayGumiWeather = "http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=4719069000"
+
+urlGumiBus = "http://211.236.110.97/GMBIS/m/page/srchBusArr.do?act=srchBusArr&stopId=132&stopKname=%EA%B8%88%EC%98%A4%EA%B3%B5%EB%8C%80%EC%A2%85%EC%A0%90&menuCode=1_03&stopServiceid=10132"
 
 urlArr=[urlStudent,urlPorum,urlorum1,urlorum3,urlProfess,urlBunsic]
 
@@ -157,6 +161,7 @@ def saveWeather(): #날씨 크롤링 후 엑셀에 저장하는 함수
     min = str(time.localtime().tm_min)
     sec = str(time.localtime().tm_sec)
     print(f"Weather Save Finish at {day} day, {hour}:{min}:{sec}")
+
 
 
 saveMenuArr()  #프로그램 최초 실행 시 메뉴 리프레시(저장)

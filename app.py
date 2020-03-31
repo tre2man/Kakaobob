@@ -1,3 +1,5 @@
+#앱 동작 부분
+
 from flask import Flask,request,jsonify
 import time
 import openpyxl as xl
@@ -11,6 +13,7 @@ app = Flask(__name__)
 ChoiceWeek=0
 ChoiceRes=0
 Lastindex = 1
+user_number = 501    #저장 가능한 유저의 수
 
 
 StudentTime=str("조식시간 : 08:30 ~ 09:30\n중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30\n토 : 10:00~14:00\n일,공휴일 : 휴무")
@@ -28,18 +31,18 @@ def saveDBres(user,res):
     f = xl.load_workbook('files/user.xlsx', data_only=True)
     file = f['Sheet']
 
-    for i in range(1, 501):
+    for i in range(1, user_number):
         if file.cell(i, 1).value == user :
             file.cell(i, 2, res)
             f.save('files/user.xlsx')
             print(f'Saved res in {i}')
             return
-        elif i == 500 :
+        elif i == user_number-1 :
             file.cell(Lastindex, 1, user)
             file.cell(Lastindex, 2, res)
             f.save('files/user.xlsx')
 
-            print(f'Add user in {Lastindex}')
+            print(f'Add u ser in {Lastindex}')
             print(f'Saved res in {Lastindex}')
 
             Lastindex += 1
@@ -52,7 +55,7 @@ def findRes(user):
     f = xl.load_workbook('files/user.xlsx', data_only=True)
     file = f['Sheet']
 
-    for i in range(1, 501):
+    for i in range(1, user_number):
         if file.cell(i, 1).value == user :
             return int(file.cell(i,2).value)
 
@@ -141,6 +144,9 @@ def bob():
 
     elif says == u"날씨 정보":
         response_data = js.returnWeatherjson()
+
+    elif says == u"버스 정보":
+        response_data = js.returnBusTime()
 
     else :
         response_data = js.jsonMainmenu

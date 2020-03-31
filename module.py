@@ -1,8 +1,14 @@
+#길고 복잡한 변수 및 함수 부분
+
+import bs4
+import urllib.request
 import time
 import openpyxl as xl
 
 Restaurant=["학생식당","푸름관","오름1동","오름3동","교직원 식당","분식당"]
 week=["월요일","화요일","수요일","목요일","금요일","토요일","일요일"]
+
+urlGumiBus = "http://211.236.110.97/GMBIS/m/page/srchBusArr.do?act=srchBusArr&stopId=132&stopKname=%EA%B8%88%EC%98%A4%EA%B3%B5%EB%8C%80%EC%A2%85%EC%A0%90&menuCode=1_03&stopServiceid=10132"
 
 jsonMainmenu = {
     "version": "2.0",
@@ -126,5 +132,36 @@ def returnWeatherjson():  #날씨 데이터를 json으로 반환하는 함수
                   "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"}]
             }
     }
+
+    return temp
+
+
+def returnBus():
+
+    html = bs4.BeautifulSoup(urllib.request.urlopen(urlGumiBus), "html.parser")
+    buses = html.findAll("ul",{"class":"arrive_desc"})
+    value = ""
+    if buses == "":
+        return "버스가 없습니다."
+    else:
+        for bus in buses:
+            bus_no = bus.find("li",{"class":"bus_no"}).text
+            bus_state = bus.find("li",{"class":"bus_state"}).text
+            bus_now = bus.findAll("li")
+            value += f"\n{bus_no.ljust(9)}  {bus_state.ljust(7)}  {bus_now[3].text}"
+
+        return "버스 번호 / 버스 시간 / 현재 위치\n" + value.lstrip("\n")
+
+
+def returnBusTime():  #식당 이용 가능 시간을 json으로 리턴하는 함수
+
+    temp = {
+         "version": "2.0",
+         "template": {
+             "outputs": [{"simpleText": {"text": returnBus()}}],
+             "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"},
+                              ]
+                     }
+         }
 
     return temp
