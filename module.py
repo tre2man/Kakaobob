@@ -1,4 +1,4 @@
-#길고 복잡한 변수 및 함수 부분
+#길고 반복적인 변수 및 함수 부분
 
 import bs4
 import urllib.request
@@ -10,13 +10,17 @@ week=["월요일","화요일","수요일","목요일","금요일","토요일","�
 
 urlGumiBus = "http://211.236.110.97/GMBIS/m/page/srchBusArr.do?act=srchBusArr&stopId=132&stopKname=%EA%B8%88%EC%98%A4%EA%B3%B5%EB%8C%80%EC%A2%85%EC%A0%90&menuCode=1_03&stopServiceid=10132"
 
+Lastindex = 1
+user_max_number = 501    #저장 가능한 유저의 수
+
 jsonMainmenu = {
     "version": "2.0",
     "template": {"outputs": [{"simpleText": {"text": "원하시는 기능을 선택해 주세요"}}],
                  "quickReplies": [{"label": "식단 정보", "action": "message", "messageText": "식단 정보"},
                                   {"label": "버스 정보", "action": "message", "messageText": "버스 정보"},
                                   {"label": "날씨 정보", "action": "message", "messageText": "날씨 정보"},
-                                  {"label": "식당 이용 가능 시간", "action": "message", "messageText": "식당 이용 가능 시간"}
+                                  {"label": "식당 이용 가능 시간", "action": "message", "messageText": "식당 이용 가능 시간"},
+                                  {"label": "정보", "action": "message", "messageText": "정보"}
                                   ]
                  }
 }
@@ -137,6 +141,41 @@ def returnWeatherjson():  #날씨 데이터를 json으로 반환하는 함수
     return temp
 
 
+def saveDBres(user,res):
+
+    global Lastindex
+    f = xl.load_workbook('files/user.xlsx', data_only=True)
+    file = f['Sheet']
+
+    for num in range(1, user_max_number):
+        if file.cell(num, 1).value == user :
+            file.cell(num, 2, res)
+            f.save('files/user.xlsx')
+            print(f'Saved res in {num}')
+            return
+        elif num == user_max_number-1 :
+            file.cell(Lastindex, 1, user)
+            file.cell(Lastindex, 2, res)
+            f.save('files/user.xlsx')
+
+            print(f'Add u ser in {Lastindex}')
+            print(f'Saved res in {Lastindex}')
+
+            Lastindex += 1
+
+            return
+
+
+def findRes(user):
+
+    f = xl.load_workbook('files/user.xlsx', data_only=True)
+    file = f['Sheet']
+
+    for num in range(1, user_max_number):
+        if file.cell(num, 1).value == user :
+            return int(file.cell(num,2).value)
+
+
 def returnBus():
 
     html = bs4.BeautifulSoup(urllib.request.urlopen(urlGumiBus), "html.parser")
@@ -149,7 +188,7 @@ def returnBus():
             bus_no = bus.find("li",{"class":"bus_no"}).text
             bus_state = bus.find("li",{"class":"bus_state"}).text
             bus_now = bus.findAll("li")
-            value += f"\n{bus_no}   {bus_state}   {bus_now[3].text}"
+            value += f"\n{bus_no} {bus_state} {bus_now[3].text}"
 
         return value.lstrip("\n")
 
@@ -165,7 +204,7 @@ def returnBusTime():
                         "type": "basicCard",
                         "items": [
                             {
-                                "title": "버스 번호 / 남은 시간 / 현재 위치",
+                                "title": "금오공대 종점 정류장\n\b버스 번호 / 남은 시간 / 현재 위치",
                                 "description": returnBus()
                             }
                         ]
@@ -177,6 +216,3 @@ def returnBusTime():
     }
 
     return temp
-
-
-print(returnBus())
