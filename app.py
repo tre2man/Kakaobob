@@ -2,7 +2,6 @@
 
 from flask import Flask,request,jsonify
 import time
-import openpyxl as xl
 import module as md
 
 import os
