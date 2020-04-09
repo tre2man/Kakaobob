@@ -15,7 +15,7 @@ user_max_number = 501    #저장 가능한 유저의 수
 
 jsonMainmenu = {
     "version": "2.0",
-    "template": {"outputs": [{"simpleText": {"text": "원하시는 기능을 선택해 주세요"}}],
+    "template": {"outputs": [{"simpleText": {"text": "🔧 원하시는 기능을 선택해 주세요. 🔧"}}],
                  "quickReplies": [{"label": "식단 정보", "action": "message", "messageText": "식단 정보"},
                                   {"label": "버스 정보", "action": "message", "messageText": "버스 정보"},
                                   {"label": "날씨 정보", "action": "message", "messageText": "날씨 정보"},
@@ -158,7 +158,7 @@ def saveDBres(user,res):
             file.cell(Lastindex, 2, res)
             f.save('files/user.xlsx')
 
-            print(f'Add u ser in {Lastindex}')
+            print(f'Add user in {Lastindex}')
             print(f'Saved res in {Lastindex}')
 
             Lastindex += 1
@@ -204,7 +204,7 @@ def returnBusTime():
                         "type": "basicCard",
                         "items": [
                             {
-                                "title": "금오공대 종점 정류장\n\b버스 번호 / 남은 시간 / 현재 위치",
+                                "title": "금오공대 종점 정류장\n버스 번호 / 남은 시간 / 현재 위치",
                                 "description": returnBus()
                             }
                         ]
