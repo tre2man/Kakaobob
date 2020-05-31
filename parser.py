@@ -167,8 +167,8 @@ def saveWeather(): #날씨 크롤링 후 엑셀에 저장하는 함수
 saveMenuArr()  #프로그램 최초 실행 시 메뉴 리프레시(저장)
 saveWeather()
 
-schedule.every().day.at("00:10").do(saveMenuArr)   #특정 시간 마다 크롤링
-schedule.every().day.at("00:20").do(saveMenuArr)
+schedule.every().monday.at("00:10").do(saveMenuArr()) #특정 시간 마다 크롤링
+schedule.every().saturday.at("00:10").do(saveMenuArr())
 schedule.every(15).minutes.do(saveWeather)
 
 while True:
