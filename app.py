@@ -32,15 +32,15 @@ def bob():
     says = contents['userRequest']['utterance']         #사용자의 발화 추출
     user_key = contents['userRequest']['user']['id']    #사용자의 id 추출
 
-    if says==u"학생식당":
+    if says == u"학생식당":
         response_data = md.returnjsonChoiceday()
         md.saveDBres(user_key, 0)
 
-    elif says==u"푸름관":
+    elif says == u"푸름관":
         response_data = md.returnjsonChoiceday()
         md.saveDBres(user_key, 1)
 
-    elif says==u"오름1동":
+    elif says == u"오름1동":
         response_data = md.returnjsonChoiceday()
         md.saveDBres(user_key, 2)
 
@@ -48,15 +48,15 @@ def bob():
         response_data = md.returnjsonChoiceday()
         md.saveDBres(user_key, 3)
 
-    elif says==u"교직원":
+    elif says == u"교직원":
         response_data = md.returnjsonChoiceday()
         md.saveDBres(user_key, 4)
 
-    elif says==u"분식당":
+    elif says == u"분식당":
         response_data = md.returnjsonChoiceday()
         md.saveDBres(user_key, 5)
 
-    elif says==u"오늘":
+    elif says == u"오늘":
         ChoiceWeek = time.localtime().tm_wday
         response_data = md.returnMenujson(md.findRes(user_key),ChoiceWeek)
 
@@ -88,16 +88,16 @@ def bob():
         ChoiceWeek = 6
         response_data = md.returnMenujson(md.findRes(user_key),ChoiceWeek)
 
-    elif says==u"처음으로" :
+    elif says == u"처음으로":
         response_data = md.jsonMainmenu
 
-    elif says==u"식단 정보":
+    elif says == u"식단 정보":
         response_data = md.jsonChoiceRes
 
-    elif says==u"식당 이용 가능 시간":
+    elif says == u"식당 이용 가능 시간":
         response_data = md.jsonChoiceAvailableTime
 
-    elif says==u"학생식당 시간":
+    elif says == u"학생식당 시간":
         response_data = md.returnAvaliableTime(StudentTime)
 
     elif says == u"기숙사 시간":
@@ -117,5 +117,5 @@ def bob():
 
     return jsonify(response_data)
 
-if __name__=="__main__":
+if __name__ == "__main__":
      app.run(host="0.0.0.0", port=5000)
