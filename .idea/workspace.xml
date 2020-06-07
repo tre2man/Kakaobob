@@ -151,6 +151,10 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+<<<<<<< HEAD
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+=======
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../opencvtest" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
@@ -165,6 +169,7 @@
         </RuleState>
       </list>
     </option>
+>>>>>>> 383717ad665e3ae3b98c966dc2348cfafbd116b3
   </component>
   <component name="RunManager" selected="Python.parser (1)">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
