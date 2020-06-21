@@ -12,7 +12,7 @@ app = Flask(__name__)
 ChoiceWeek=0
 ChoiceRes=0
 Lastindex = 1
-user_max_number = 501    #저장 가능한 유저의 수
+user_max_number = 1001    #저장 가능한 유저의 수
 
 
 StudentTime=str("조식시간 : 08:30 ~ 09:30\n중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30\n토 : 10:00~14:00\n일,공휴일 : 휴무")
