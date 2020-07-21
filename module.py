@@ -34,7 +34,6 @@ jsonChoiceRes = {
                                   {"label": "오름1동", "action": "message", "messageText": "오름1동"},
                                   {"label": "오름3동", "action": "message", "messageText": "오름3동"},
                                   {"label": "교직원", "action": "message", "messageText": "교직원"},
-                                  {"label": "분식당", "action": "message", "messageText": "분식당"}
                                   ]
                  }
 }

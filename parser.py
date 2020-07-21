@@ -43,10 +43,28 @@ def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (식당종류
         menuEnd = str(menu[num].text.rstrip("\n"))
         menuEnd = menuEnd.lstrip()
 
-        days=html.findAll("th",{"scope":{"col"}})
-        day=str(days[num].text.lstrip())
+        days = html.findAll("th",{"scope":{"col"}})
+        day = str(days[num].text.lstrip())
 
         if menuEnd != "" :
+
+            # 각 식당마다 조식, 중식, 석식의 구성이 다르고 테이블이 나누어진 경우가 다르다.
+            # 테이블이 나누어져 있으면 수식 실행, 나누어져 있지 않으면 실행하지 않는다.
+            if ChoiceRes == 2: #오름1동 아침저녁 고정
+                menuEnd2 = str(menu[num + 7].text.rstrip("\n"))
+                menuEnd2 = menuEnd2.lstrip()
+                return f"선택한 날짜 : {day}\n아침메뉴\n\n{menuEnd}\n\n저녁메뉴\n\n{menuEnd2}"
+
+            else :
+                try:
+                    menuEnd2 = str(menu[num + 7].text.rstrip("\n"))
+                    menuEnd2 = menuEnd2.lstrip()
+                    return f"선택한 날짜 : {day}\n점심메뉴\n\n{menuEnd}\n\n저녁메뉴\n\n{menuEnd2}"
+
+                except:
+                    return f"선택한 날짜 : {day}\n오늘의식단\n\n{menuEnd}\n"
+
+            '''
             if ChoiceRes == 0: #학생식당
                 #menuEnd2 = str(menu[num].text.rstrip("\n"))
                 #menuEnd2 = menuEnd2.lstrip()
@@ -74,6 +92,7 @@ def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (식당종류
 
             else :  #분식당 고정
                 return f"선택한 날짜 : {day}\n{menuEnd}"
+                '''
 
         else:
             return "등록된 메뉴가 없습니다. 😥"

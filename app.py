@@ -52,10 +52,6 @@ def bob():
         response_data = md.returnjsonChoiceday()
         md.saveDBres(user_key, 4)
 
-    elif says == u"분식당":
-        response_data = md.returnjsonChoiceday()
-        md.saveDBres(user_key, 5)
-
     elif says == u"오늘":
         ChoiceWeek = time.localtime().tm_wday
         response_data = md.returnMenujson(md.findRes(user_key),ChoiceWeek)
