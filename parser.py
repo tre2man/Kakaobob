@@ -64,36 +64,6 @@ def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (식당종류
                 except:
                     return f"선택한 날짜 : {day}\n오늘의식단\n\n{menuEnd}\n"
 
-            '''
-            if ChoiceRes == 0: #학생식당
-                #menuEnd2 = str(menu[num].text.rstrip("\n"))
-                #menuEnd2 = menuEnd2.lstrip()
-                return f"선택한 날짜 : {day}\n\n{menuEnd}\n"
-            
-            elif ChoiceRes == 1: #푸름동
-                menuEnd2 = str(menu[num + 7].text.rstrip("\n"))
-                menuEnd2 = menuEnd2.lstrip()
-                return f"선택한 날짜 : {day}\n점심메뉴\n\n{menuEnd}\n\n저녁메뉴\n\n{menuEnd2}"
-            
-            elif ChoiceRes == 2: #오름1동 아침저녁 고정
-                menuEnd2 = str(menu[num + 7].text.rstrip("\n"))
-                menuEnd2 = menuEnd2.lstrip()
-                return f"선택한 날짜 : {day}\n아침메뉴\n\n{menuEnd}\n\n저녁메뉴\n\n{menuEnd2}"
-
-            elif ChoiceRes == 3:  #오름3동
-                menuEnd2 = str(menu[num + 7].text.rstrip("\n"))
-                menuEnd2 = menuEnd2.lstrip()
-                return f"선택한 날짜 : {day}\n점심메뉴\n\n{menuEnd}\n\n저녁메뉴\n\n{menuEnd2}"
-
-            elif ChoiceRes == 4:  # 교직원
-                menuEnd2 = str(menu[num + 7].text.rstrip("\n"))
-                menuEnd2 = menuEnd2.lstrip()
-                return f"선택한 날짜 : {day}\n점심메뉴\n\n{menuEnd}\n\n저녁메뉴\n\n{menuEnd2}"
-
-            else :  #분식당 고정
-                return f"선택한 날짜 : {day}\n{menuEnd}"
-                '''
-
         else:
             return "등록된 메뉴가 없습니다. 😥"
 

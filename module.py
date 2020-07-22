@@ -151,7 +151,9 @@ def saveDBres(user,res):
             file.cell(num, 2, res)
             f.save('files/user.xlsx')
             print(f'Saved res in {num}')
+
             return
+
         elif num == user_max_number-1 :
             file.cell(Lastindex, 1, user)
             file.cell(Lastindex, 2, res)
