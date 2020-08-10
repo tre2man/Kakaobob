@@ -174,6 +174,7 @@ saveWeather()
 
 schedule.every().saturday.at("23:50").do(saveMenuArr)   #특정 시간 마다 크롤링
 schedule.every().monday.at("00:10").do(saveMenuArr)
+schedule.every().monday.at("06:00").do(saveMenuArr)
 schedule.every().friday.at("23:50").do(saveMenuArr)
 schedule.every(15).minutes.do(saveWeather)
 
