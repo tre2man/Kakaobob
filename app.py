@@ -105,9 +105,6 @@ def bob():
     elif says == u"날씨 정보":
         response_data = md.returnWeatherjson()
 
-    elif says == u"버스 정보":
-        response_data = md.returnBusTime()
-
     else :
         response_data = md.jsonMainmenu
 
