@@ -30,10 +30,10 @@ jsonChoiceRes = {
     "version": "2.0",
     "template": {"outputs": [{"simpleText": {"text": "🍽 식당을 선택해 주세요. 🍽"}}],
                  "quickReplies": [{"label": "학생식당", "action": "message", "messageText": "학생식당"},
+                                  {"label": "교직원", "action": "message", "messageText": "교직원"},
                                   {"label": "푸름관", "action": "message", "messageText": "푸름관"},
                                   {"label": "오름1동", "action": "message", "messageText": "오름1동"},
-                                  {"label": "오름3동", "action": "message", "messageText": "오름3동"},
-                                  {"label": "교직원", "action": "message", "messageText": "교직원"},
+                                  {"label": "오름3동", "action": "message", "messageText": "오름3동"}
                                   ]
                  }
 }
