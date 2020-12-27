@@ -174,10 +174,10 @@ saveMenuArr()  # 프로그램 최초 실행 시 메뉴 리프레시(저장)
 saveWeather()
 
 schedule.every().day.at("00:10").do(saveMenuArr)
-schedule.every().day.at("06:00").do(saveMenuArr)
 schedule.every().day.at("00:20").do(saveMenuArr)
-schedule.every(15).minutes.do(saveWeather)
 schedule.every().day.at("00:30").do(saveMenuArr)
+schedule.every().day.at("06:00").do(saveMenuArr)
+schedule.every(15).minutes.do(saveWeather)
 
 while True:
     schedule.run_pending()
