@@ -14,7 +14,6 @@ urlProfess = "http://www.kumoh.ac.kr/ko/restaurant02.do"
 urlPorum = "http://dorm.kumoh.ac.kr/dorm/restaurant_menu01.do"
 urlorum1 = "http://dorm.kumoh.ac.kr/dorm/restaurant_menu02.do"
 urlorum3 = "http://dorm.kumoh.ac.kr/dorm/restaurant_menu03.do"
-urlBunsic = "http://www.kumoh.ac.kr/ko/restaurant04.do"
 
 urlNaverGumiWeather = "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&query=%" \
                       "EA%B5%AC%EB%AF%B8%EC%8B%9C+%EC%96%91%ED%8F%AC%EB%8F%99+%EB%82%A0%EC%94%A8&oquery" \
@@ -24,7 +23,7 @@ urlTodayGumiWeather = "http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=4719069000"
 
 urlGumiBus = "http://211.236.110.97/GMBIS/m/page/srchBusArr.do?act=srchBusArr&stopId=132&stopKname=%EA%B8%88%EC%98%A4%EA%B3%B5%EB%8C%80%EC%A2%85%EC%A0%90&menuCode=1_03&stopServiceid=10132"
 
-urlArr=[urlStudent,urlPorum,urlorum1,urlorum3,urlProfess,urlBunsic]
+urlArr=[urlStudent,urlPorum,urlorum1,urlorum3,urlProfess]
 
 
 def returnMenu(url,num):  #식단 문자열을 반환하는 함수 (식당종류,날짜)

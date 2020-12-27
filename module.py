@@ -1,14 +1,10 @@
 #길고 반복적인 변수 및 함수 부분
 
-import bs4
-import urllib.request
 import time
 import openpyxl as xl
 
 Restaurant=["학생식당","푸름관","오름1동","오름3동","교직원 식당","분식당"]
 week=["월요일","화요일","수요일","목요일","금요일","토요일","일요일"]
-
-urlGumiBus = "http://211.236.110.97/GMBIS/m/page/srchBusArr.do?act=srchBusArr&stopId=132&stopKname=%EA%B8%88%EC%98%A4%EA%B3%B5%EB%8C%80%EC%A2%85%EC%A0%90&menuCode=1_03&stopServiceid=10132"
 
 Lastindex = 1
 user_max_number = 501    #저장 가능한 유저의 수
@@ -17,7 +13,6 @@ jsonMainmenu = {
     "version": "2.0",
     "template": {"outputs": [{"simpleText": {"text": "🔧 원하시는 기능을 선택해 주세요. 🔧"}}],
                  "quickReplies": [{"label": "식단 정보", "action": "message", "messageText": "식단 정보"},
-                                  {"label": "버스 정보", "action": "message", "messageText": "버스 정보"},
                                   {"label": "날씨 정보", "action": "message", "messageText": "날씨 정보"},
                                   {"label": "식당 이용 가능 시간", "action": "message", "messageText": "식당 이용 가능 시간"},
                                   {"label": "정보", "action": "message", "messageText": "정보"}
@@ -30,10 +25,10 @@ jsonChoiceRes = {
     "version": "2.0",
     "template": {"outputs": [{"simpleText": {"text": "🍽 식당을 선택해 주세요. 🍽"}}],
                  "quickReplies": [{"label": "학생식당", "action": "message", "messageText": "학생식당"},
+                                  {"label": "교직원", "action": "message", "messageText": "교직원"},
                                   {"label": "푸름관", "action": "message", "messageText": "푸름관"},
                                   {"label": "오름1동", "action": "message", "messageText": "오름1동"},
-                                  {"label": "오름3동", "action": "message", "messageText": "오름3동"},
-                                  {"label": "교직원", "action": "message", "messageText": "교직원"},
+                                  {"label": "오름3동", "action": "message", "messageText": "오름3동"}
                                   ]
                  }
 }
@@ -176,44 +171,3 @@ def findRes(user):
         if file.cell(num, 1).value == user :
             return int(file.cell(num,2).value)
 
-
-def returnBus():
-
-    html = bs4.BeautifulSoup(urllib.request.urlopen(urlGumiBus), "html.parser")
-    buses = html.findAll("ul",{"class":"arrive_desc"})
-    value = ""
-    if buses == "":
-        return "버스가 없습니다."
-    else:
-        for bus in buses:
-            bus_no = bus.find("li",{"class":"bus_no"}).text
-            bus_state = bus.find("li",{"class":"bus_state"}).text
-            bus_now = bus.findAll("li")
-            value += f"\n{bus_no} {bus_state} {bus_now[3].text}"
-
-        return value.lstrip("\n")
-
-
-def returnBusTime():
-
-    temp = {
-        "version": "2.0",
-        "template": {
-            "outputs": [
-                {
-                    "carousel": {
-                        "type": "basicCard",
-                        "items": [
-                            {
-                                "title": "금오공대 종점 정류장\n버스 번호 / 남은 시간 / 현재 위치",
-                                "description": returnBus()
-                            }
-                        ]
-                    }
-                }
-            ],
-            "quickReplies": [{"label": "처음으로", "action": "message", "messageText": "처음으로"}]
-        }
-    }
-
-    return temp
