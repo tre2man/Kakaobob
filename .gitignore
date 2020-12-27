@@ -13,3 +13,5 @@
 .idea/kakaobob.iml
 .idea/misc.xml
 __pycache__/module.cpython-37.pyc
+files/weather.xlsx
+files/menu.xlsx
