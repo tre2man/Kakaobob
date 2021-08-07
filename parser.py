@@ -1,4 +1,4 @@
-#식단과 날씨 수정하는 부분
+# 식단과 날씨 수정하는 부분
 
 import time
 import bs4
@@ -22,6 +22,7 @@ urlNaverGumiWeather = "https://search.naver.com/search.naver?sm=tab_hty.top&wher
 urlTodayGumiWeather = "http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=4719069000"
 
 urlArr = [urlStudent, urlPorum, urlorum1, urlorum3, urlProfess, urlBunsic]
+
 
 def returnMenu(url, num):  # 식단 문자열을 반환하는 함수 (식당종류,날짜)
 
@@ -83,7 +84,8 @@ def saveMenuArr():  # 금오공대 전체 메뉴를 엑셀에 저장하기 위�
         for res in urlArr:  # 식당 루프
             col = 0
             for week in range(7):  # 번호 루프
-                menuxl.cell(ChoiceRes + 1, col + 1, returnMenu(res, week))  # 해당하는 셀에 메뉴 정보를 저장
+                # 해당하는 셀에 메뉴 정보를 저장
+                menuxl.cell(ChoiceRes + 1, col + 1, returnMenu(res, week))
                 col += 1
             ChoiceRes += 1
 
@@ -118,7 +120,6 @@ def saveWeather():  # 날씨 크롤링 후 엑셀에 저장하는 함수
         html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
         html2 = bs4.BeautifulSoup(urllib.request.urlopen(url2), "html.parser")
 
-        today_rain = html2.find("pty")
         weatherbox = html.find("div", {"class": "weather_area _mainArea"})
 
         today_weather = weatherbox.find("div", {"class": "info_data"})
@@ -138,23 +139,30 @@ def saveWeather():  # 날씨 크롤링 후 엑셀에 저장하는 함수
         weatherxl.cell(1, 5, today_parti_matter.text)
         weatherxl.cell(1, 6, today_ozon.text)
 
-        weather_predicts = weatherbox.findAll("li", {"class": {"date_info today"}})
+        weather_predicts = weatherbox.findAll(
+            "li", {"class": {"date_info today"}})
 
         tom_weather = weather_predicts[1]
-        tom_morning_rain = tom_weather.find("span", {"class": {"point_time morning"}})
+        tom_morning_rain = tom_weather.find(
+            "span", {"class": {"point_time morning"}})
         tom_morning_rain = tom_morning_rain.find("span", {"class": {"num"}})
-        tom_afternoon_rain = tom_weather.find("span", {"class": {"point_time afternoon"}})
-        tom_afternoon_rain = tom_afternoon_rain.find("span", {"class": {"num"}})
+        tom_afternoon_rain = tom_weather.find(
+            "span", {"class": {"point_time afternoon"}})
+        tom_afternoon_rain = tom_afternoon_rain.find(
+            "span", {"class": {"num"}})
         tom_temp = tom_weather.find("dd")
         weatherxl.cell(2, 1, tom_morning_rain.text)
         weatherxl.cell(2, 2, tom_afternoon_rain.text)
         weatherxl.cell(2, 3, tom_temp.text)
 
         tom2_weather = weather_predicts[2]
-        tom2_morning_rain = tom_weather.find("span", {"class": {"point_time morning"}})
+        tom2_morning_rain = tom_weather.find(
+            "span", {"class": {"point_time morning"}})
         tom2_morning_rain = tom2_morning_rain.find("span", {"class": {"num"}})
-        tom2_afternoon_rain = tom2_weather.find("span", {"class": {"point_time afternoon"}})
-        tom2_afternoon_rain = tom2_afternoon_rain.find("span", {"class": {"num"}})
+        tom2_afternoon_rain = tom2_weather.find(
+            "span", {"class": {"point_time afternoon"}})
+        tom2_afternoon_rain = tom2_afternoon_rain.find(
+            "span", {"class": {"num"}})
         tom2_temp = tom2_weather.find("dd")
         weatherxl.cell(3, 1, tom2_morning_rain.text)
         weatherxl.cell(3, 2, tom2_afternoon_rain.text)

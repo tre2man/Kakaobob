@@ -1,6 +1,6 @@
-#앱 동작 부분
+# 앱 동작 부분
 
-from flask import Flask,request,jsonify
+from flask import Flask, request, jsonify
 import time
 import module as md
 
@@ -9,28 +9,29 @@ import sys
 
 app = Flask(__name__)
 
-ChoiceWeek=0
-ChoiceRes=0
+ChoiceWeek = 0
+ChoiceRes = 0
 Lastindex = 1
-user_max_number = 1001    #저장 가능한 유저의 수
+user_max_number = 1001  # 저장 가능한 유저의 수
 
 
-StudentTime=str("조식시간 : 08:30 ~ 09:30\n중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30\n토 : 10:00~14:00\n일,공휴일 : 휴무")
+StudentTime = str(
+    "조식시간 : 08:30 ~ 09:30\n중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30\n토 : 10:00~14:00\n일,공휴일 : 휴무")
 
-ProfessTime=str("중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30")
+ProfessTime = str("중식시간 : 11:30 ~ 14:00\n석식시간 : 17:30 ~ 18:30")
 
-DomitoryTime=str("학기중\n\n조식 시간\n- 평일 : 07:30 ~ 09:30\n- 주말 : 08:00 ~ 09:30\n중식 시간\n- 평일 : 11:30 ~ 13:30"
-                 "\n- 주말 : 12:00 ~ 13:30\n석식 시간\n- 평일 : 17:00 ~ 19:00\n- 주말 : 17:00 ~ 18:30\n\n방학중\n\n"
-                 "조식 시간- 08:00 ~ 09:30\n중식 시간- 12:00 ~ 13:30\n석식 시간- 17:00 ~ 18:30")
+DomitoryTime = str("학기중\n\n조식 시간\n- 평일 : 07:30 ~ 09:30\n- 주말 : 08:00 ~ 09:30\n중식 시간\n- 평일 : 11:30 ~ 13:30"
+                   "\n- 주말 : 12:00 ~ 13:30\n석식 시간\n- 평일 : 17:00 ~ 19:00\n- 주말 : 17:00 ~ 18:30\n\n방학중\n\n"
+                   "조식 시간- 08:00 ~ 09:30\n중식 시간- 12:00 ~ 13:30\n석식 시간- 17:00 ~ 18:30")
 
 
-@app.route('/message', methods=['POST'])  #json으로 들어온 사용자 요청을 보고 판단
+@app.route('/message', methods=['POST'])  # json으로 들어온 사용자 요청을 보고 판단
 def bob():
 
-    contents = request.get_json()    #사용자가 보낸 메세지 입력
+    contents = request.get_json()  # 사용자가 보낸 메세지 입력
 
-    says = contents['userRequest']['utterance']         #사용자의 발화 추출
-    user_key = contents['userRequest']['user']['id']    #사용자의 id 추출
+    says = contents['userRequest']['utterance']  # 사용자의 발화 추출
+    user_key = contents['userRequest']['user']['id']  # 사용자의 id 추출
 
     if says == u"학생식당":
         response_data = md.returnjsonChoiceday()
@@ -54,35 +55,35 @@ def bob():
 
     elif says == u"오늘":
         ChoiceWeek = time.localtime().tm_wday
-        response_data = md.returnMenujson(md.findRes(user_key),ChoiceWeek)
+        response_data = md.returnMenujson(md.findRes(user_key), ChoiceWeek)
 
-    elif says==u"월요일":
+    elif says == u"월요일":
         ChoiceWeek = 0
-        response_data = md.returnMenujson(md.findRes(user_key),ChoiceWeek)
+        response_data = md.returnMenujson(md.findRes(user_key), ChoiceWeek)
 
-    elif says==u"화요일":
+    elif says == u"화요일":
         ChoiceWeek = 1
-        response_data = md.returnMenujson(md.findRes(user_key),ChoiceWeek)
+        response_data = md.returnMenujson(md.findRes(user_key), ChoiceWeek)
 
-    elif says==u"수요일":
+    elif says == u"수요일":
         ChoiceWeek = 2
-        response_data = md.returnMenujson(md.findRes(user_key),ChoiceWeek)
+        response_data = md.returnMenujson(md.findRes(user_key), ChoiceWeek)
 
-    elif says==u"목요일":
+    elif says == u"목요일":
         ChoiceWeek = 3
-        response_data = md.returnMenujson(md.findRes(user_key),ChoiceWeek)
+        response_data = md.returnMenujson(md.findRes(user_key), ChoiceWeek)
 
-    elif says==u"금요일":
+    elif says == u"금요일":
         ChoiceWeek = 4
-        response_data = md.returnMenujson(md.findRes(user_key),ChoiceWeek)
+        response_data = md.returnMenujson(md.findRes(user_key), ChoiceWeek)
 
-    elif says==u"토요일":
+    elif says == u"토요일":
         ChoiceWeek = 5
-        response_data = md.returnMenujson(md.findRes(user_key),ChoiceWeek)
+        response_data = md.returnMenujson(md.findRes(user_key), ChoiceWeek)
 
-    elif says==u"일요일":
+    elif says == u"일요일":
         ChoiceWeek = 6
-        response_data = md.returnMenujson(md.findRes(user_key),ChoiceWeek)
+        response_data = md.returnMenujson(md.findRes(user_key), ChoiceWeek)
 
     elif says == u"처음으로":
         response_data = md.jsonMainmenu
@@ -105,10 +106,11 @@ def bob():
     elif says == u"날씨 정보":
         response_data = md.returnWeatherjson()
 
-    else :
+    else:
         response_data = md.jsonMainmenu
 
     return jsonify(response_data)
 
+
 if __name__ == "__main__":
-     app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000)
