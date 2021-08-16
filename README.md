@@ -27,7 +27,7 @@
 
 - 식단과 날씨
 
-<img src = "/img/screenshot_bob.jpg" height="1000px"></img> <img src = "/img/screenshot_weather.jpg" height="1000px"></img>
+<img src = "/img/screenshot_bob.jpg" height="600px"></img> <img src = "/img/screenshot_weather.jpg" height="600px"></img>
 
 
 ### 후기
