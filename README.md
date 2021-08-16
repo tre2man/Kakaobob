@@ -25,13 +25,10 @@
 
 ### 동작 결과
 
-- 식단
+- 식단과 날씨
 
-<img src = "/img/screenshot_bob.jpg"></img>
+<img src = "/img/screenshot_bob.jpg" height="1000px"></img> <img src = "/img/screenshot_weather.jpg" height="1000px"></img>
 
-- 날씨
-
-<img src = "/img/screenshot_weather.jpg"></img>
 
 ### 후기
 
