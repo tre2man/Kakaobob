@@ -19,8 +19,6 @@ urlNaverGumiWeather = "https://search.naver.com/search.naver?sm=tab_hty.top&wher
                       "EA%B5%AC%EB%AF%B8%EC%8B%9C+%EC%96%91%ED%8F%AC%EB%8F%99+%EB%82%A0%EC%94%A8&oquery" \
                       "=%EA%B5%AC%EB%AF%B8%EC%8B%9C+%EB%82%A0%EC%94%A8&tqi=UFk1%2BwprvxZssC9GFFdssssstU4-254477"
 
-urlTodayGumiWeather = "https://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=4719069000"
-
 urlArr = [urlStudent, urlPorum, urlorum1, urlorum3, urlProfess, urlBunsic]
 
 
@@ -105,8 +103,6 @@ def saveWeather():  # 날씨 크롤링 후 엑셀에 저장하는 함수
     url = urlNaverGumiWeather
     url2 = urlTodayGumiWeather
 
-    Skystate = ["없음", "비", "비/눈", "눈", "소나기"]
-
     day = str(time.localtime().tm_mday)
     hour = str(time.localtime().tm_hour)
     min = str(time.localtime().tm_min)
@@ -118,7 +114,6 @@ def saveWeather():  # 날씨 크롤링 후 엑셀에 저장하는 함수
         weatherxl = f.active
 
         html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
-        html2 = bs4.BeautifulSoup(urllib.request.urlopen(url2), "html.parser")
 
         weatherbox = html.find("div", {"class": "weather_area _mainArea"})
 
