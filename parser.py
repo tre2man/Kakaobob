@@ -19,6 +19,8 @@ urlNaverGumiWeather = "https://search.naver.com/search.naver?sm=tab_hty.top&wher
                       "EA%B5%AC%EB%AF%B8%EC%8B%9C+%EC%96%91%ED%8F%AC%EB%8F%99+%EB%82%A0%EC%94%A8&oquery" \
                       "=%EA%B5%AC%EB%AF%B8%EC%8B%9C+%EB%82%A0%EC%94%A8&tqi=UFk1%2BwprvxZssC9GFFdssssstU4-254477"
 
+urlTodayGumiWeather = "https://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=4719069000"
+
 urlArr = [urlStudent, urlPorum, urlorum1, urlorum3, urlProfess, urlBunsic]
 
 
@@ -101,6 +103,7 @@ def saveMenuArr():  # 금오공대 전체 메뉴를 엑셀에 저장하기 위�
 def saveWeather():  # 날씨 크롤링 후 엑셀에 저장하는 함수
 
     url = urlNaverGumiWeather
+    url2 = urlTodayGumiWeather
 
     day = str(time.localtime().tm_mday)
     hour = str(time.localtime().tm_hour)
@@ -113,6 +116,7 @@ def saveWeather():  # 날씨 크롤링 후 엑셀에 저장하는 함수
         weatherxl = f.active
 
         html = bs4.BeautifulSoup(urllib.request.urlopen(url), "html.parser")
+        html2 = bs4.BeautifulSoup(urllib.request.urlopen(url2), "html.parser")
 
         weatherbox = html.find("div", {"class": "weather_area _mainArea"})
 
@@ -173,14 +177,14 @@ def saveWeather():  # 날씨 크롤링 후 엑셀에 저장하는 함수
 
 
 saveMenuArr()  # 프로그램 최초 실행 시 메뉴 리프레시(저장)
-saveWeather()
+# saveWeather() # 나중에 수정할 예정
 
 schedule.every().day.at("00:10").do(saveMenuArr)
 schedule.every().day.at("00:20").do(saveMenuArr)
 schedule.every().day.at("00:30").do(saveMenuArr)
 schedule.every().day.at("06:00").do(saveMenuArr)
 schedule.every().day.at("09:30").do(saveMenuArr)
-schedule.every(15).minutes.do(saveWeather)
+# schedule.every(15).minutes.do(saveWeather) # 나중에 수정할 예정
 
 while True:
     schedule.run_pending()
