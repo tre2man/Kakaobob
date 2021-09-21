@@ -101,7 +101,6 @@ def saveMenuArr():  # 금오공대 전체 메뉴를 엑셀에 저장하기 위�
 def saveWeather():  # 날씨 크롤링 후 엑셀에 저장하는 함수
 
     url = urlNaverGumiWeather
-    url2 = urlTodayGumiWeather
 
     day = str(time.localtime().tm_mday)
     hour = str(time.localtime().tm_hour)
