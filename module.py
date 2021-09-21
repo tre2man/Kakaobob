@@ -13,8 +13,6 @@ jsonMainmenu = {
     "version": "2.0",
     "template": {"outputs": [{"simpleText": {"text": "🔧 원하시는 기능을 선택해 주세요. 🔧"}}],
                  "quickReplies": [{"label": "식단 정보", "action": "message", "messageText": "식단 정보"},
-                                  {"label": "날씨 정보", "action": "message",
-                                      "messageText": "날씨 정보"},
                                   {"label": "식당 이용 가능 시간", "action": "message",
                                       "messageText": "식당 이용 가능 시간"},
                                   {"label": "정보", "action": "message",

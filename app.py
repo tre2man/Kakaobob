@@ -103,9 +103,6 @@ def bob():
     elif says == u"교직원 시간":
         response_data = md.returnAvaliableTime(ProfessTime)
 
-    elif says == u"날씨 정보":
-        response_data = md.returnWeatherjson()
-
     else:
         response_data = md.jsonMainmenu
 
