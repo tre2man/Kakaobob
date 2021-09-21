@@ -19,7 +19,7 @@ urlNaverGumiWeather = "https://search.naver.com/search.naver?sm=tab_hty.top&wher
                       "EA%B5%AC%EB%AF%B8%EC%8B%9C+%EC%96%91%ED%8F%AC%EB%8F%99+%EB%82%A0%EC%94%A8&oquery" \
                       "=%EA%B5%AC%EB%AF%B8%EC%8B%9C+%EB%82%A0%EC%94%A8&tqi=UFk1%2BwprvxZssC9GFFdssssstU4-254477"
 
-urlTodayGumiWeather = "http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=4719069000"
+urlTodayGumiWeather = "https://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=4719069000"
 
 urlArr = [urlStudent, urlPorum, urlorum1, urlorum3, urlProfess, urlBunsic]
 
