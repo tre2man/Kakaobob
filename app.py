@@ -108,6 +108,10 @@ def bob():
 
     return jsonify(response_data)
 
+@app.route('/')  # 서버 동작하는지 확인하는 코드
+def hello():
+    return 'Hello, Bob friend'
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
